@@ -1,0 +1,76 @@
+version: "3.5"
+services:
+  redis:
+    image: redis/redis-stack
+    container_name: redis_prod
+    hostname: redis_prod
+    ports: 
+      - "8002:8001"
+    networks:
+      - pi
+    volumes:
+      - redis_data:/data
+  
+  manager:
+    build: 
+      context: ../consumer-kafka-producer
+      dockerfile: ../deployment/Dockerfile.node
+    container_name: manager
+    hostname: manager
+    command: npm run manage
+    volumes:
+      - ./node-config:/usr/src/app/config
+    networks:
+      - pi
+    depends_on:
+      - redis
+  
+  consumer:
+    build: 
+      context: ../consumer-kafka-producer
+      dockerfile: ../deployment/Dockerfile.node
+    container_name: consumer
+    hostname: consumer
+    command: npm run consume
+    volumes:
+      - ./node-config:/usr/src/app/config
+    networks:
+      - pi
+    depends_on:
+      - redis
+
+  location-consumer:
+    build:
+      context: ../consumer-kafka-producer
+      dockerfile: ../deployment/Dockerfile.node
+    container_name: location-consumer
+    hostname: location-consumer
+    command: npm run location
+    volumes:
+      - ./node-config:/usr/src/app/config
+    networks:
+      - pi
+    depends_on:
+      - redis
+      
+  ble-sniffer-producer:
+    build: 
+      context: ../ble-sniffer-producer
+      dockerfile: ../deployment/Dockerfile.python
+    container_name: ble-sniffer-producer
+    hostname: ble-sniffer-producer
+    volumes:
+      - ./python-config/config.ini:/usr/src/app/config.ini
+    networks:
+      - pi
+    depends_on:
+      - redis
+    privileged: true
+    devices:
+      - /dev/....:/dev/ttyUSB0
+    
+networks:
+  pi:
+
+volumes:
+  redis_data:

@@ -1,0 +1,26 @@
+{
+  "name": "consumer-kafka-producer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "consumer.ts",
+  "scripts": {
+    "consume": "ts-node ./consumer.ts",
+    "manage": "ts-node ./manager.ts",
+    "location": "ts-node ./locationConsumer.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kafkajs/confluent-schema-registry": "^3.3.0",
+    "axios": "^1.4.0",
+    "config": "^3.3.9",
+    "ioredis": "^5.3.2",
+    "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "@types/config": "^3.3.0"
+  }
+}

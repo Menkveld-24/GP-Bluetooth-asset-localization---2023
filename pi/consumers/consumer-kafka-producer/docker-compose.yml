@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  redis:
+    image: redis/redis-stack
+    container_name: redis-node
+    hostname: redis
+    ports: 
+      - "6370:6379"
+      - "8001:8001"
+      

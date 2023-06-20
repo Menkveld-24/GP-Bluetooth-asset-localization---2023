@@ -1,0 +1,1 @@
+- Convert locations and decimals values to doubles

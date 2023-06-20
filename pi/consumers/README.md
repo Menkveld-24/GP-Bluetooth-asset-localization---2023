@@ -1,0 +1,1 @@
+This repository contains all code that should be run locally on a Raspberry Pi with a nRF Sniffer from Nordic Semiconductor. It reads BLE packets, caches them in Redis and then pushes them towards Kafka.

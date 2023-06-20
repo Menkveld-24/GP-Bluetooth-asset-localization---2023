@@ -1,0 +1,16 @@
+{
+    "name": "QuestDBSinkConnector_0",
+    "config": {
+        "value.converter.schema.registry.url": "http://schema-registry:8081",
+        "key.converter.schema.registry.url": "http://localhost:8081",
+        "schema.registry.url": "http://schema-registry:8081",
+        "name": "QuestDBSinkConnector_0",
+        "connector.class": "io.questdb.kafka.QuestDBSinkConnector",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.enable": "true",
+        "topics": "THINGY_LOCATION_BEACONS_MERGED_4",
+        "host": "questdb:9009",
+        "include.key": "false",
+        "key.converter": "org.apache.kafka.connect.converters.ByteArrayConverter"
+    }
+}
