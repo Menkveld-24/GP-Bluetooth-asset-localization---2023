@@ -426,6 +426,7 @@ services:
       # - ./questdb/conf:/etc/questdb
 
   mysql:
+    container_name: mysql
     image: "mysql:8.0"
     environment:
       MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
@@ -437,12 +438,14 @@ services:
       - "3306:3306"
 
   redis:
+    container_name: redis
     image: redis/redis-stack
     ports:
       - "6379:6379"
       - "8002:8001"
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin
     ports:
       - "8008:80"
@@ -453,6 +456,7 @@ services:
       - "PMA_PORT=3306"
   
   dashboard:
+    container_name: dashboard
     build:
       context: ../dashboard
       dockerfile: ../server-deployment/Dockerfile.dashboard
@@ -465,6 +469,9 @@ services:
     depends_on:
       - mysql
       - redis
+      - control-center
+      - ksqldb-server
+      - questdb
 
 volumes:
   data-zk-log-1:
