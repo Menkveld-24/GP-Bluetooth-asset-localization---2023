@@ -49,6 +49,7 @@ const filterThingies = debounce(() => {
     const results: number[] = [];
     const searchable: string = search.value.toUpperCase();
 
+    // @ts-expect-error We don't need the mac
     for (const [mac, thingy] of Object.entries(thingyStore.thingies)) {
         if (
             results.length < 3 &&

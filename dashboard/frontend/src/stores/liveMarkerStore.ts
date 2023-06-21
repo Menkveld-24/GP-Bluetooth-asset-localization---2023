@@ -46,12 +46,14 @@ export const useLiveMarkerStore = defineStore('liveMarker', () => {
     }
 
     function showMarkers(): void {
+        // @ts-expect-error We don't need the mac
         for (const [mac, marker] of Object.entries(markers.value)) {
             marker.marker.addTo(map);
         }
     }
 
     function hideMarkers(): void {
+        // @ts-expect-error We don't need the mac
         for (const [mac, marker] of Object.entries(markers.value)) {
             marker.marker.remove();
         }

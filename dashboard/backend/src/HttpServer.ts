@@ -9,6 +9,7 @@ import redis from '@serviceproviders/RedisServiceProvider';
 // import { customErrorResponseHandler } from '@routes/errorHandler';
 import defaultResponseInjector from './middlewares/DefaultResponseMiddleware';
 import { customErrorResponseHandler } from '@routes/errorHandler';
+import path from 'path';
 
 export function startHTTPServer (): void {
     log('Starting HTTP server...');
@@ -39,7 +40,8 @@ export function startHTTPServer (): void {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(defaultResponseInjector);
-    app.use('/api/images', express.static('uploads'));
+    app.use('/', express.static(path.join(__dirname, './public')));
+    app.use('/api/images', express.static(path.join(__dirname, './uploads')));
 
     routes.forEach((route) => {
         route.middlewares.forEach((middleware) => {

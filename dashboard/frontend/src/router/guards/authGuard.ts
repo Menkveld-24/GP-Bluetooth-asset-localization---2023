@@ -1,6 +1,7 @@
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 import { userStore } from '@stores/userStore';
 
+// @ts-expect-error We don't need the from
 const authCheck = async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const user = userStore();
     await user.init();

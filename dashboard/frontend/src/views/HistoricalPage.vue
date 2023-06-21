@@ -113,6 +113,7 @@ function updateMinMaxTime() {
     let min = Infinity;
     let max = 0;
 
+    // @ts-expect-error We don't need the mac
     for (const [mac, thingy] of Object.entries(sampledData.value)) {
         min = Math.min((Object.keys(thingy.locations).at(0) ?? Infinity) as number, min);
         max = Math.max((Object.keys(thingy.locations).at(-1) ?? 0) as number, max);

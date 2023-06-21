@@ -425,12 +425,46 @@ services:
       - questdb-data:/var/lib/questdb
       # - ./questdb/conf:/etc/questdb
 
-  # questdb-connector:
-  #   restart: unless-stopped
-  #   container_name: questdb-connector
-  #   hostname: questdb-connector
-  #   build: .
-    
+  mysql:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
+      MYSQL_DATABASE: "gp"
+      MYSQL_USER: "gp"
+      MYSQL_PASSWORD: "gp"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+      - "8002:8001"
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8008:80"
+    environment:
+      - "PMA_HOST=mysql"
+      - "PMA_USER=gp"
+      - "PMA_PASSWORD=gp"
+      - "PMA_PORT=3306"
+  
+  dashboard:
+    build:
+      context: ../dashboard
+      dockerfile: ../server-deployment/Dockerfile.dashboard
+      args:
+        - "MAPBOX_TOKEN=${MAPBOX_TOKEN}"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dashboard/.env:/app/.env
+    depends_on:
+      - mysql
+      - redis
 
 volumes:
   data-zk-log-1:
@@ -445,6 +479,8 @@ volumes:
   data-kafka-2:
   data-kafka-3:
   questdb-data:
+  dashboard-uploads:
+  dashboard-mysql:
 
 networks:
   confluent:

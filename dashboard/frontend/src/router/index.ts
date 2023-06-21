@@ -18,7 +18,6 @@ const routes = [
         components: {
             default: HomePage,
         },
-        props: true,
         meta: {
             showMap: false,
         },
@@ -80,6 +79,7 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
+    // @ts-expect-error idk why, but it wants to error
     routes,
 });
 

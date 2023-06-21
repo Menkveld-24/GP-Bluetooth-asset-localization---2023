@@ -34,6 +34,7 @@ const searchResults = computed(() => {
     const results: Array<{ mac: string; name: string }> = [];
     const searchable: string = search.value.toUpperCase();
 
+    // @ts-expect-error We don't need the mac
     for (const [mac, marker] of Object.entries(markerStore.markers)) {
         if (
             results.length < 3 &&

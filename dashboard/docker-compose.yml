@@ -1,0 +1,43 @@
+version: "3.1"
+
+services:
+  mysql:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
+      MYSQL_DATABASE: "gp"
+      MYSQL_USER: "gp"
+      MYSQL_PASSWORD: "gp"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+
+  redis:
+    image: redis/redis-stack
+    ports:
+      - "6377:6379"
+      - "8002:8001"
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8008:80"
+    environment:
+      - "PMA_HOST=mysql"
+      - "PMA_USER=gp"
+      - "PMA_PASSWORD=gp"
+      - "PMA_PORT=3306"
+  
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - "MAPBOX_TOKEN="
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/.env:/app/.env
+    depends_on:
+      - mysql
+      - redis

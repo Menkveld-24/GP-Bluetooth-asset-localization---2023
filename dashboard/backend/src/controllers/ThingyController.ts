@@ -8,7 +8,7 @@ import { getBatteryGraph, getCo2PPMGraph, getHumidityGraph, getLatestBatteryLoca
 import { type InspectedThingy } from '@app/interfaces/ThingyInspectInterface';
 
 const upload = multer({
-    dest: 'uploads/',
+    dest: 'public/uploads/',
     fileFilter: imageValidator
 });
 
