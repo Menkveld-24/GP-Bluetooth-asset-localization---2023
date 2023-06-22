@@ -1,6 +1,6 @@
 import { Kafka } from 'kafkajs';
-import config from 'utils/configLoader';
-import { log } from 'console';
+import config from '../utils/configLoader';
+import { log } from '../utils/logger';
 
 const admin = new Kafka({
     clientId: config.kafka.clientId,

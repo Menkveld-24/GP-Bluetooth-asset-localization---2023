@@ -1,10 +1,10 @@
-import { log } from 'console';
 import ksql from './ksqlHelper';
 import path from 'path';
 import { readFileSync } from 'fs';
 import { type RegisteredSchema } from '@kafkajs/confluent-schema-registry/dist/SchemaRegistry';
 import { registerAvroSchema } from './registryHelper';
 import admin from './kafkaHelper';
+import { log } from '../utils/logger';
 
 export async function executeKSQL (query: string, description: string): Promise<void> {
     const response = await ksql.executeStatement(query);

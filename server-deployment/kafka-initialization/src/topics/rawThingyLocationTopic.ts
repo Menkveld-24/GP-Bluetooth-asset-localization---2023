@@ -1,7 +1,7 @@
-import config from 'utils/configLoader';
-import { log } from 'utils/logger';
-import QUERY from 'ksql-queries/indexRawThingyLocation';
-import { createTopic, executeKSQL, uploadSchemas } from 'helpers/topicCreationHelper';
+import config from '../utils/configLoader';
+import { log } from '../utils/logger';
+import QUERY from '../ksql-queries/indexRawThingyLocation';
+import { createTopic, executeKSQL, uploadSchemas } from '../helpers/topicCreationHelper';
 
 export default async function createRawThingyLocationTopic (): Promise<void> {
     await createTopic(config.kafka.topics.raw_locations.name, config.kafka.topics.raw_locations.partitions);

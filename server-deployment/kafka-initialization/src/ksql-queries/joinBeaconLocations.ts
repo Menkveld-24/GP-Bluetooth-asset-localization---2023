@@ -1,4 +1,4 @@
-import config from 'utils/configLoader';
+import config from '../utils/configLoader';
 
 const QUERY = `CREATE STREAM ${config.ksql.merged_location_beacons.name} WITH (PARTITIONS=${config.ksql.merged_location_beacons.partitions}, VALUE_FORMAT='AVRO') AS SELECT
 B.MAC mac,

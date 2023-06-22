@@ -1,6 +1,6 @@
-import config from 'utils/configLoader';
+import config from '../utils/configLoader';
 import KsqldbClient from 'ksqldb-client';
-import { log } from 'utils/logger';
+import { log } from '../utils/logger';
 
 const ksql = new KsqldbClient({
     host: config.ksql.host,

@@ -1,7 +1,7 @@
 import { SchemaRegistry } from '@kafkajs/confluent-schema-registry';
 import { SchemaType } from '@kafkajs/confluent-schema-registry/dist/@types';
 import { type RegisteredSchema } from '@kafkajs/confluent-schema-registry/dist/SchemaRegistry';
-import config from 'utils/configLoader';
+import config from '../utils/configLoader';
 
 const registry = new SchemaRegistry({ host: config.kafka.schemaRegistry });
 
