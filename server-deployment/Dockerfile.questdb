@@ -1,6 +1,7 @@
+# This dockerfile extends the questdb image with a curl heatlhcheck
 FROM questdb/questdb:7.2
 
 RUN apt-get update
 RUN apt-get install -y curl
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:9003 || exit 1 
+HEALTHCHECK --interval=10s --timeout=30s --start-period=15s --retries=3 CMD curl --fail http://localhost:9003 || exit 1 

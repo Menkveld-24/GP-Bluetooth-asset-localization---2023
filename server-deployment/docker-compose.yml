@@ -423,10 +423,10 @@ services:
       - kafka-3
       - schema-registry
     healthcheck:
-      test: nc -z rest-proxy 8088 || exit -1
+      test: curl --fail http://localhost:8082 || exit -1
       start_period: 15s
-      interval: 5s
-      timeout: 10s
+      interval: 10s
+      timeout: 30s
       retries: 3
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
@@ -476,10 +476,10 @@ services:
     networks:
       - confluent
     healthcheck:
-      test: nc -z redis 6379 || exit -1
+      test: redis-cli ping || exit -1
       start_period: 15s
-      interval: 5s
-      timeout: 10s
+      interval: 10s
+      timeout: 30s
       retries: 3
 
   phpmyadmin:
@@ -495,10 +495,10 @@ services:
     networks:
       - confluent
     healthcheck:
-      test: nc -z phpmyadmin 80 || exit -1
+      test: curl --fail http://localhost:80 || exit -1
       start_period: 15s
-      interval: 5s
-      timeout: 10s
+      interval: 10s
+      timeout: 30s
       retries: 3
   
   dashboard:
@@ -520,12 +520,6 @@ services:
       - control-center
       - ksqldb-server
       - questdb
-    healthcheck:
-      test: nc -z dasboard 3000 || exit -1
-      start_period: 15s
-      interval: 5s
-      timeout: 10s
-      retries: 3
   
   kafka-setup:
     container_name: kafka-setup

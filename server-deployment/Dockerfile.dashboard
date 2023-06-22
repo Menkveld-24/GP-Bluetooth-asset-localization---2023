@@ -34,5 +34,9 @@ COPY --from=building /temporary/backend /app
 RUN mkdir ./dist/public
 COPY --from=building /temporary/frontend/dist /app/public
 
+RUN apk update
+RUN apk add curl
+HEALTHCHECK --interval=10s --timeout=30s --start-period=15s --retries=3 CMD curl --fail http://localhost:3000 || exit 1 
+
 # the npm entrypoint to start running npm run prod
 ENTRYPOINT /usr/local/bin/npm run prod
