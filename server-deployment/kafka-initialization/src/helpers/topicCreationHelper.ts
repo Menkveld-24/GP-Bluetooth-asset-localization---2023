@@ -7,6 +7,8 @@ import admin from './kafkaHelper';
 import { log } from '../utils/logger';
 
 export async function executeKSQL (query: string, description: string): Promise<void> {
+    log(`Executing ksql query for ${description}...`);
+    log(query);
     const response = await ksql.executeStatement(query);
     console.log(response);
     if (response.status === 0) {
