@@ -436,7 +436,9 @@ services:
 
   # QuestDB
   questdb:
-    image: questdb/questdb:7.2
+    build: 
+      context: .
+      dockerfile: Dockerfile.questdb
     restart: unless-stopped
     hostname: questdb
     container_name: questdb
@@ -447,12 +449,6 @@ services:
       - "9003:9003"
     networks:
       - confluent
-    healthcheck:
-      test: nc -z questdb 9000 || exit -1
-      start_period: 10s
-      interval: 5s
-      timeout: 10s
-      retries: 3
     volumes:
       - questdb-data:/var/lib/questdb
       # - ./questdb/conf:/etc/questdb
