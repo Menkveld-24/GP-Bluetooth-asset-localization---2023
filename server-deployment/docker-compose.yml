@@ -422,6 +422,12 @@ services:
       - kafka-2
       - kafka-3
       - schema-registry
+    healthcheck:
+      test: nc -z rest-proxy 8088 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
@@ -441,6 +447,12 @@ services:
       - "9003:9003"
     networks:
       - confluent
+    healthcheck:
+      test: nc -z questdb 9000 || exit -1
+      start_period: 10s
+      interval: 5s
+      timeout: 10s
+      retries: 3
     volumes:
       - questdb-data:/var/lib/questdb
       # - ./questdb/conf:/etc/questdb
@@ -467,6 +479,12 @@ services:
       - "8002:8001"
     networks:
       - confluent
+    healthcheck:
+      test: nc -z redis 6379 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -480,6 +498,12 @@ services:
       - "8008:80"
     networks:
       - confluent
+    healthcheck:
+      test: nc -z phpmyadmin 80 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
   
   dashboard:
     container_name: dashboard
@@ -500,6 +524,12 @@ services:
       - control-center
       - ksqldb-server
       - questdb
+    healthcheck:
+      test: nc -z dasboard 3000 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
   
   kafka-setup:
     container_name: kafka-setup
