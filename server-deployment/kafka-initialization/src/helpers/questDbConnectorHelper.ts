@@ -5,7 +5,7 @@ import questDbSinkConnectorConfig from '../questDbSinkConnectorConfig';
 export async function uploadSinkConnectorConfig (): Promise<void> {
     const newConfig = questDbSinkConnectorConfig;
 
-    log('Uploading sink connector config to connect');
+    log('Uploading sink connector config to connect', `${config.questdbSinkConnector.host}:${config.questdbSinkConnector.port}}`);
     const currentConnectors = await fetch(`${config.questdbSinkConnector.host}:${config.questdbSinkConnector.port}/connectors`);
 
     if ('QuestDBSinkConnector_MergedThingyLocationBeacons' in await currentConnectors.json()) {
