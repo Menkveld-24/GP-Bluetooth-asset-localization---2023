@@ -1,2 +1,5 @@
 CREATE DATABASE IF NOT EXISTS `gp`;
 CREATE DATABASE IF NOT EXISTS `npm`;
+
+GRANT ALL ON gp.* TO 'gp'@'%';
+GRANT ALL ON npm.* TO 'gp'@'%';
