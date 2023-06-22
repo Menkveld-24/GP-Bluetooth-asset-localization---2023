@@ -465,6 +465,7 @@ services:
       MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
       MYSQL_USER: "gp"
       MYSQL_PASSWORD: "gp"
+      MYSQL_DB: "gp"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
@@ -472,7 +473,6 @@ services:
       - confluent
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./initMy.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     container_name: redis
@@ -538,12 +538,6 @@ services:
       - "81:81"
     networks:
       - confluent
-    environment:
-      DB_MYSQL_HOST: "mysql"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "gp"
-      DB_MYSQL_PASSWORD: "gp"
-      DB_MYSQL_NAME: "npm"
     volumes:
       - nginx-proxy-data:/data
       - nginx-proxy-letsencrypt:/etc/letsencrypt
