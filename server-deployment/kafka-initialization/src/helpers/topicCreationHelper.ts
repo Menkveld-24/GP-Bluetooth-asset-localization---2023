@@ -5,11 +5,12 @@ import { type RegisteredSchema } from '@kafkajs/confluent-schema-registry/dist/S
 import { registerAvroSchema } from './registryHelper';
 import admin from './kafkaHelper';
 import { log } from '../utils/logger';
+import { type OptionalExtraParams } from 'ksqldb-client';
 
-export async function executeKSQL (query: string, description: string): Promise<void> {
+export async function executeKSQL (query: string, options: OptionalExtraParams, description: string): Promise<void> {
     log(`Executing ksql query for ${description}...`);
     log(query);
-    const response = await ksql.executeStatement(query);
+    const response = await ksql.executeStatement(query, options);
     console.log(response);
     if (response.status === 0) {
         log(`${description} created}`);
