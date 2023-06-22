@@ -534,6 +534,8 @@ services:
       - "80:80"
       - "443:443"
       - "81:81"
+    networks:
+      - confluent
     environment:
       DB_MYSQL_HOST: "mysql"
       DB_MYSQL_PORT: 3306
