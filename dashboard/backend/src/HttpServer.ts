@@ -6,8 +6,8 @@ import passport from '@app/serviceproviders/AuthenticationServiceProvider';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
 import redis from '@serviceproviders/RedisServiceProvider';
-// import { customErrorResponseHandler } from '@routes/errorHandler';
-import defaultResponseInjector from './middlewares/DefaultResponseMiddleware';
+import history from 'connect-history-api-fallback';
+import defaultResponseInjector from '@middlewares/DefaultResponseMiddleware';
 import { customErrorResponseHandler } from '@routes/errorHandler';
 import path from 'path';
 
@@ -39,6 +39,17 @@ export function startHTTPServer (): void {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(history({
+        index: '/index.html',
+        rewrites: [
+            {
+                from: /^\/api\/.*$/,
+                to: (context): string => {
+                    return context.parsedUrl.pathname ?? '/';
+                }
+            }
+        ]
+    }));
     app.use(defaultResponseInjector);
     app.use('/', express.static(path.join(__dirname, './public')));
     app.use('/api/images', express.static(path.join(__dirname, './uploads')));
