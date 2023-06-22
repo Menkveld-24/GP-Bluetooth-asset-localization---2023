@@ -1,6 +1,8 @@
 # This dockerfile is used for building the dashboard image
 FROM node:18-alpine as building
 
+ARG MAPBOX_TOKEN
+
 RUN apk update
 RUN mkdir /temporary
 RUN mkdir /temporary/frontend
@@ -12,7 +14,7 @@ COPY ./frontend/package*.json ./
 RUN npm ci
 
 COPY ./frontend .
-ENV VITE_MAPBOX_TOKEN=${MAPBOX_TOKEN}
+ENV VITE_MAPBOX_TOKEN=$MAPBOX_TOKEN
 RUN npm run build
 
 # Building the backend
