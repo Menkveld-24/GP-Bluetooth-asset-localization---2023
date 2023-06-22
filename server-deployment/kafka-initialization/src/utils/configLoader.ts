@@ -45,7 +45,7 @@ interface appConfig {
 
 const config: appConfig = {
     questdb: {
-        host: process.env.QUESTDB_HOST ?? 'http://questdb',
+        host: process.env.QUESTDB_HOST ?? 'questdb',
         port: parseInt(process.env.QUESTDB_PORT ?? '9000'),
         table_name: process.env.QUESTDB_TABLE_NAME ?? 'THINGY_LOCATION_BEACONS_MERGED'
     },
