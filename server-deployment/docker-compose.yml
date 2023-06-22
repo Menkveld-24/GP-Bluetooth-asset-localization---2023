@@ -480,6 +480,18 @@ services:
       - control-center
       - ksqldb-server
       - questdb
+  
+  kafka-setup:
+    container_name: kafka-setup
+    build:
+      context: .
+      dockerfile: Dockerfile.kafka-setup
+    networks:
+      - confluent
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
 
 volumes:
   data-zk-log-1:
