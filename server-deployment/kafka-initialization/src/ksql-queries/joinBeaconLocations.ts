@@ -2,7 +2,7 @@ import { type OptionalExtraParams } from 'ksqldb-client';
 import config from '../utils/configLoader';
 
 // eslint-disable-next-line
-const QUERY = 'CREATE STREAM ${STREAM_NAME} WITH (PARTITIONS=${PARTITIONS}, VALUE_FORMAT=\'AVRO\') AS SELECT B.MAC mac, L.MAC mac2, B.HUMIDITY humidity, B.FWVERSION fwversion, B.RSSI rssi, B.TEMPERATURE temperature, B.CO2_PPM co2_ppm, B.BATTERY battery, B.ROLLOVER rollover, L.LATITUDE latitude, L.LONGITUDE longitude, COALESCE(B.ROWTIME, L.ROWTIME) beacon_timestamp FROM ${JOIN_BEACONS_STREAM} B INNER JOIN ${JOIN_LOCATIONS_STREAM} L WITHIN ${WITHIN_MIN} MINUTES GRACE PERIOD ${GRACE_PERIOD_MIN} MINUTES ON ((B.INDEX = L.INDEX)) PARTITION BY L.MAC EMIT CHANGES;';
+const QUERY = 'CREATE STREAM ${STREAM_NAME} WITH (PARTITIONS=${PARTITIONS}, VALUE_FORMAT=\'AVRO\') AS SELECT B.MAC mac, L.MAC mac2, B.HUMIDITY humidity, B.FWVERSION fwversion, B.RSSI rssi, B.TEMPERATURE temperature, B.CO2_PPM co2_ppm, B.BATTERY battery, B.ROLLOVER rollover, L.LATITUDE latitude, L.LONGITUDE longitude, COALESCE(B.ROWTIME, L.ROWTIME) beacon_timestamp FROM ${JOIN_BEACONS_STREAM} B INNER JOIN ${JOIN_LOCATIONS_STREAM} L WITHIN ${WITHIN_MIN} MINUTES GRACE PERIOD ${GRACE_PERIOD_MIN} MINUTES ON (B.INDEX = L.INDEX) PARTITION BY L.MAC EMIT CHANGES;';
 const options: OptionalExtraParams = {
     sessionVariables: {
         STREAM_NAME: config.ksql.merged_location_beacons.name,
