@@ -465,7 +465,7 @@ services:
       MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
       MYSQL_USER: "gp"
       MYSQL_PASSWORD: "gp"
-      MYSQL_DB: "gp"
+      MYSQL_DATABASE: "gp"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
