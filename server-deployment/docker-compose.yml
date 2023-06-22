@@ -521,19 +521,19 @@ services:
       - ksqldb-server
       - questdb
   
-  kafka-setup:
-    container_name: kafka-setup
-    build:
-      context: .
-      dockerfile: Dockerfile.kafkasetup
-    networks:
-      - confluent
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-    environment:
-      - "CONFLUENT_REST_URL=http://rest-proxy:8082"
+  # kafka-setup:
+  #   container_name: kafka-setup
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.kafkasetup
+  #   networks:
+  #     - confluent
+  #   depends_on:
+  #     - kafka-1
+  #     - kafka-2
+  #     - kafka-3
+  #   environment:
+  #     - "CONFLUENT_REST_URL=http://rest-proxy:8082"
 
 volumes:
   data-zk-log-1:

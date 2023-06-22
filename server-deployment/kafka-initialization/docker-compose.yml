@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  kafka-setup:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: kafka-setup
+    networks:
+      - confluent
+
+networks:
+  confluent:
+    external: true
