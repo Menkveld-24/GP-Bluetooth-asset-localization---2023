@@ -12,8 +12,11 @@ export async function executeKSQL (query: string, options: OptionalExtraParams, 
     log(query);
     const response = await ksql.executeStatement(query, options);
     console.log(response);
-    if (response.status === 0) {
+    if (response.status === 200) {
         log(`${description} created}`);
+        return;
+    } else if (response.status === 400) {
+        log(`${description} already exists`);
         return;
     }
 
