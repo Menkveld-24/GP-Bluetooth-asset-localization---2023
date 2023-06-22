@@ -1,3 +1,0 @@
-FROM confluentinc/confluent-cli:3.18.0
-
-ENTRYPOINT tail -f /dev/null

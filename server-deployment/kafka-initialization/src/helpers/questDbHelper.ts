@@ -3,7 +3,7 @@ import { log } from '../utils/logger';
 
 export async function executeQuestDB (query: string): Promise<void> {
     log(`Executing QuestDB query: ${query}`);
-    const response = await fetch(`${config.questdb.host}:${config.questdb.port}/exec?query=${query}`);
+    const response = await fetch(`http://${config.questdb.host}:${config.questdb.port}/exec?query=${query}`);
     if (!response.ok) {
         console.log(response);
         log(response.status);

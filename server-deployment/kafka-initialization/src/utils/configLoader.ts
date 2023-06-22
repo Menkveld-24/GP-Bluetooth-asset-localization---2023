@@ -37,6 +37,10 @@ interface appConfig {
             raw_locations: topic
         }
     }
+    questdbSinkConnector: {
+        host: string
+        port: number
+    }
 }
 
 const config: appConfig = {
@@ -78,6 +82,10 @@ const config: appConfig = {
                 partitions: parseInt(process.env.KAFKA_TOPIC_RAW_LOCATIONS_PARTITIONS ?? '6')
             }
         }
+    },
+    questdbSinkConnector: {
+        host: process.env.QUESTDB_SINK_CONNECTOR_HOST ?? 'http://connect',
+        port: parseInt(process.env.QUESTDB_SINK_CONNECTOR_PORT ?? '8083')
     }
 };
 
