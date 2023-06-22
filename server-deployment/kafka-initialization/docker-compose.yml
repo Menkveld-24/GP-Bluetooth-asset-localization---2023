@@ -6,8 +6,8 @@ services:
       dockerfile: Dockerfile
     container_name: kafka-setup
     networks:
-      - confluent
+      - server-deployment_confluent
 
 networks:
-  confluent:
+  server-deployment_confluent:
     external: true
