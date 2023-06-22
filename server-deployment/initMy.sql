@@ -3,3 +3,4 @@ CREATE DATABASE IF NOT EXISTS `npm`;
 
 GRANT ALL ON gp.* TO 'gp'@'%';
 GRANT ALL ON npm.* TO 'gp'@'%';
+FLUSH PRIVILEGES;
