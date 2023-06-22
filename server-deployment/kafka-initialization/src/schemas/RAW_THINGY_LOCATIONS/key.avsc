@@ -1,0 +1,13 @@
+{
+    "doc": "Key schema, should be the MAC address like (AA22CC33EE44)",
+    "fields": [
+        {
+            "doc": "The mac address of the Thingy (AABBCCDDEEFF)",
+            "name": "mac",
+            "type": "string"
+        }
+    ],
+    "name": "KeySchema_1",
+    "namespace": "com.menke.thingy_locations",
+    "type": "record"
+}

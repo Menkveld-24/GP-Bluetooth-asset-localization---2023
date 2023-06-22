@@ -1,0 +1,33 @@
+{
+    "doc": "value schema, the timestamp of the kafka log should be set manually to the timestamp of the beacon",
+    "fields": [
+        {
+            "doc": "The mac address of the Thingy (AABBCCDDEEFF)",
+            "name": "mac",
+            "type": "string"
+        },
+        {
+            "doc": "The firmware version",
+            "name": "fwVersion",
+            "type": "int"
+        },
+        {
+            "doc": "The rollover byte",
+            "name": "rollover",
+            "type": "int"
+        },
+        {
+            "doc": "The latitude location",
+            "name": "latitude",
+            "type": "float"
+        },
+        {
+            "doc": "The longitude location",
+            "name": "longitude",
+            "type": "float"
+        }
+    ],
+    "name": "ValueSchema",
+    "namespace": "com.menke.thingy_locations",
+    "type": "record"
+}

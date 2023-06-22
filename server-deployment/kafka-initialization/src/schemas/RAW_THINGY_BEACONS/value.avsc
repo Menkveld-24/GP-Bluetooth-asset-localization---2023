@@ -1,0 +1,49 @@
+{
+    "doc": "value schema, the timestamp of the kafka log should be set manually to the timestamp of the beacon",
+    "fields": [
+        {
+            "doc": "The mac address of the Thingy (AABBCCDDEEFF)",
+            "name": "mac",
+            "type": "string"
+        },
+        {
+            "doc": "The humidity",
+            "name": "humidity",
+            "type": "float"
+        },
+        {
+            "default": -1,
+            "doc": "The firmware version",
+            "name": "fwVersion",
+            "type": "int"
+        },
+        {
+            "doc": "RSSI of the received signal",
+            "name": "rssi",
+            "type": "int"
+        },
+        {
+            "doc": "The temperature",
+            "name": "temperature",
+            "type": "float"
+        },
+        {
+            "doc": "The co2 air quality",
+            "name": "co2_ppm",
+            "type": "int"
+        },
+        {
+            "doc": "The battery percentage",
+            "name": "battery",
+            "type": "float"
+        },
+        {
+            "doc": "The rollover byte",
+            "name": "rollover",
+            "type": "int"
+        }
+    ],
+    "name": "ValueSchema",
+    "namespace": "com.menke.thingy_beacons",
+    "type": "record"
+}

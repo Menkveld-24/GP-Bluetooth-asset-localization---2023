@@ -1,0 +1,18 @@
+{
+    "doc": "This holds all the whitelist commands",
+    "fields": [
+        {
+            "doc": "The whitelisted mac address (AABBCCDDEEFF)",
+            "name": "mac",
+            "type": "string"
+        },
+        {
+            "doc": "Whether to whitelist or blacklist a thingy",
+            "name": "whitelisted",
+            "type": "boolean"
+        }
+    ],
+    "name": "WhitelistValueSchema",
+    "namespace": "com.menke.whitelisted_thingys",
+    "type": "record"
+}
