@@ -69,7 +69,7 @@ const config: appConfig = {
     },
     questdb: {
         host: process.env.QUESTDB_HOST ?? 'questdb',
-        port: parseInt(process.env.QUESTDB_PORT ?? '9000')
+        port: parseInt(process.env.QUESTDB_PORT ?? '8812')
     },
     redis: {
         host: process.env.REDIS_HOST ?? 'redis',
