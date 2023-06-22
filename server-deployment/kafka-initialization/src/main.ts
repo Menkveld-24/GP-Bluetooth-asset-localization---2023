@@ -5,6 +5,7 @@ import createWhitelistTopic from './topics/whitelistTopic';
 import createRawThingyBeaconTopic from './topics/rawThingyBeaconTopic';
 import createRawThingyLocationTopic from './topics/rawThingyLocationTopic';
 import createJoinedBeaconLocationsTopic from './topics/mergedLocationBeaconTopic';
+import { createMergedLocationBeaconsTable } from 'helpers/questDbHelper';
 
 log('Kafka initialization');
 
@@ -12,6 +13,7 @@ async function start (): Promise<void> {
     log('Starting app...');
     await connectToKafka();
     await connectToKsql();
+    await createMergedLocationBeaconsTable();
     await createWhitelistTopic();
     await createRawThingyBeaconTopic();
     await createRawThingyLocationTopic();
