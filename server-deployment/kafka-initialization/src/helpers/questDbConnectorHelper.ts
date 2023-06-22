@@ -1,6 +1,6 @@
 import { log } from '../utils/logger';
 import config from '../utils/configLoader';
-import questDbSinkConnectorConfig from 'questDbSinkConnectorConfig';
+import questDbSinkConnectorConfig from '../questDbSinkConnectorConfig';
 
 export async function uploadSinkConnectorConfig (): Promise<void> {
     const newConfig = questDbSinkConnectorConfig;

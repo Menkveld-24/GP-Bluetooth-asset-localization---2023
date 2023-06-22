@@ -6,7 +6,7 @@ import createRawThingyBeaconTopic from './topics/rawThingyBeaconTopic';
 import createRawThingyLocationTopic from './topics/rawThingyLocationTopic';
 import createJoinedBeaconLocationsTopic from './topics/mergedLocationBeaconTopic';
 import { createMergedLocationBeaconsTable } from './helpers/questDbHelper';
-import { uploadSinkConnectorConfig } from 'helpers/questDbConnectorHelper';
+import { uploadSinkConnectorConfig } from './helpers/questDbConnectorHelper';
 
 log('Kafka initialization');
 
