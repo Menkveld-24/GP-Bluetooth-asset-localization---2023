@@ -529,6 +529,7 @@ services:
   nginx-proxy:
     image: 'jc21/nginx-proxy-manager:2.10.3'
     restart: unless-stopped
+    container_name: nginx-proxy
     ports:
       - "80:80"
       - "443:443"
