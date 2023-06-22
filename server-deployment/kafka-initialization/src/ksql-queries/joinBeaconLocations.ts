@@ -10,7 +10,7 @@ const options: OptionalExtraParams = {
         WITHIN_MIN: config.ksql.merged_location_beacons.within.toString(),
         GRACE_PERIOD_MIN: config.ksql.merged_location_beacons.grace_period.toString(),
         JOIN_BEACONS_STREAM: config.ksql.query_output_names.raw_beacons,
-        j: config.ksql.query_output_names.raw_locations
+        JOIN_LOCATIONS_STREAM: config.ksql.query_output_names.raw_locations
     }
 };
 
