@@ -4,13 +4,17 @@ import { log } from '../utils/logger';
 export async function executeQuestDB (query: string): Promise<void> {
     log(`Executing QuestDB query: ${query}`);
     const response = await fetch(`http://${config.questdb.host}:${config.questdb.port}/exec?query=${query}`);
-    if (!response.ok) {
-        console.log(response);
-        log(response.status);
-        console.log(response.body);
-        throw new Error(`Failed to execute QuestDB query: ${query}`);
+    if (response.status === 200) {
+        log(`Executed QuestDB query: ${query}`);
+        return;
+    } else if (response.status === 400) {
+        log(`${query} executed but already exists`);
+        return;
     }
-    log(`Executed QuestDB query: ${query}`);
+    console.log(response);
+    log(response.status);
+    console.log(response.body);
+    throw new Error(`Failed to execute QuestDB query: ${query}`);
 }
 
 export async function createMergedLocationBeaconsTable (): Promise<void> {
