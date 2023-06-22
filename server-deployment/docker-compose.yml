@@ -463,7 +463,6 @@ services:
     image: "mysql:8.0"
     environment:
       MYSQL_ROOT_PASSWORD: "thisisareallystrongpassword123"
-      MYSQL_DATABASE: "gp"
       MYSQL_USER: "gp"
       MYSQL_PASSWORD: "gp"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -471,6 +470,9 @@ services:
       - "3306:3306"
     networks:
       - confluent
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./initMy.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     container_name: redis
@@ -566,6 +568,7 @@ volumes:
   dashboard-mysql:
   nginx-proxy-letsencrypt:
   nginx-proxy-data:
+  mysql-data:
 
 networks:
   confluent:
