@@ -485,7 +485,7 @@ services:
     container_name: kafka-setup
     build:
       context: .
-      dockerfile: Dockerfile.kafka-setup
+      dockerfile: Dockerfile.kafkasetup
     networks:
       - confluent
     depends_on:
