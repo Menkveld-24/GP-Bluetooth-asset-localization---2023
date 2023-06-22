@@ -5,6 +5,7 @@ services:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper-1
     hostname: zookeeper-1
+    restart: unless-stopped
     ports:
       - "2181:2181"
     volumes:
@@ -30,6 +31,7 @@ services:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper-2
     hostname: zookeeper-2
+    restart: unless-stopped
     ports:
       - "2182:2182"
     volumes:
@@ -55,6 +57,7 @@ services:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper-3
     hostname: zookeeper-3
+    restart: unless-stopped
     ports:
       - "2183:2183"
     volumes:
@@ -81,6 +84,7 @@ services:
     image: confluentinc/cp-zookeeper:7.4.0
     hostname: zookeeper-controlcenter
     container_name: zookeeper-controlcenter
+    restart: unless-stopped
     ports:
       - "22181:22181"
     volumes:
@@ -107,6 +111,7 @@ services:
     image: confluentinc/cp-server:7.4.0
     container_name: kafka-1
     hostname: kafka-1
+    restart: unless-stopped
     ports:
       - "19091:19091"
       - "29091:29091"
@@ -146,6 +151,7 @@ services:
     image: confluentinc/cp-server:7.4.0
     container_name: kafka-2
     hostname: kafka-2
+    restart: unless-stopped
     ports:
       - "19092:19092"
       - "29092:29092"
@@ -185,6 +191,7 @@ services:
     image: confluentinc/cp-server:7.4.0
     container_name: kafka-3
     hostname: kafka-3
+    restart: unless-stopped
     ports:
       - "19093:19093"
       - "29093:29093"
@@ -225,6 +232,7 @@ services:
     image: confluentinc/cp-server:7.4.0
     hostname: kafka-controlcenter
     container_name: kafka-controlcenter
+    restart: unless-stopped
     ports:
       - "19090:19090"
     networks:
@@ -262,6 +270,7 @@ services:
     image: confluentinc/cp-enterprise-control-center:7.4.0
     hostname: control-center
     container_name: control-center
+    restart: unless-stopped
     networks:
       - confluent
     ports:
@@ -368,7 +377,6 @@ services:
 
   # Kafka Connect
   connect:
-    # image: confluentinc/cp-kafka-connect:7.4.0
     build: .
     restart: unless-stopped
     hostname: connect
@@ -405,8 +413,6 @@ services:
       CONNECT_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONNECT_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-      # CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      # CONNECT_PLUGIN_PATH: /usr/share/java
 
   # # Kafka REST Proxy
   # rest-proxy:
@@ -451,7 +457,6 @@ services:
       - confluent
     volumes:
       - questdb-data:/var/lib/questdb
-      # - ./questdb/conf:/etc/questdb
 
   mysql:
     container_name: mysql
@@ -469,10 +474,10 @@ services:
 
   redis:
     container_name: redis
-    image: redis/redis-stack
+    image: redis/redis-stack:7.2.0-RC1
     ports:
       - "6379:6379"
-      - "8002:8001"
+      - "8001:8001"
     networks:
       - confluent
     healthcheck:
@@ -484,7 +489,7 @@ services:
 
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin
+    image: phpmyadmin:5.2
     environment:
       - "PMA_HOST=mysql"
       - "PMA_USER=gp"
@@ -520,6 +525,26 @@ services:
       - control-center
       - ksqldb-server
       - questdb
+  
+  nginx-proxy:
+    image: 'jc21/nginx-proxy-manager:2.10.3'
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    environment:
+      DB_MYSQL_HOST: "mysql"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "gp"
+      DB_MYSQL_PASSWORD: "gp"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - nginx-proxy-data:/data
+      - nginx-proxy-letsencrypt:/etc/letsencrypt
+    depends_on:
+      - mysql
+
 
 volumes:
   data-zk-log-1:
@@ -536,6 +561,8 @@ volumes:
   questdb-data:
   dashboard-uploads:
   dashboard-mysql:
+  nginx-proxy-letsencrypt:
+  nginx-proxy-data:
 
 networks:
   confluent:
