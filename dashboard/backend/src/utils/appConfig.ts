@@ -37,8 +37,8 @@ interface appConfig {
         schemaRegistry: string
         whitelist: {
             topic: string
-            valueSchemaVersion: number
-            keySchemaVersion: number
+            valueSchemaVersion: number | string
+            keySchemaVersion: number | string
         }
 
     }
@@ -52,7 +52,7 @@ interface appConfig {
 
 const config: appConfig = {
     db: {
-        host: process.env.DATABASE_HOST ?? 'localhost',
+        host: process.env.DATABASE_HOST ?? 'mysql',
         port: parseInt(process.env.DATABASE_PORT ?? '3306'),
         user: process.env.DATABASE_USER ?? 'root',
         password: process.env.DATABASE_PASSWORD ?? 'root',
@@ -68,26 +68,26 @@ const config: appConfig = {
         apiKey: process.env.API_KEY ?? Math.random().toString()
     },
     questdb: {
-        host: process.env.QUESTDB_HOST ?? 'localhost',
+        host: process.env.QUESTDB_HOST ?? 'questdb',
         port: parseInt(process.env.QUESTDB_PORT ?? '9000')
     },
     redis: {
-        host: process.env.REDIS_HOST ?? 'localhost',
+        host: process.env.REDIS_HOST ?? 'redis',
         port: parseInt(process.env.REDIS_PORT ?? '6379')
     },
     ksql: {
-        host: process.env.KSQL_HOST ?? 'http://localhost',
+        host: process.env.KSQL_HOST ?? 'http://ksqlsdb-server',
         port: parseInt(process.env.KSQL_PORT ?? '8088'),
         whitelistTable: process.env.KSQL_WHITELIST_TABLE ?? 'WHITELISTED_THINGIES'
     },
     kafka: {
         clientId: process.env.KAFKA_CLIENT_ID ?? 'node-backend',
-        brokers: (process.env.KAFKA_BROKERS ?? '192.168.1.201:29091,192.168.1.201:29092,192.168.1.201:29093').split(','),
-        schemaRegistry: process.env.KAFKA_SCHEMA_REGISTRY ?? 'http://192.168.1.201:8081/',
+        brokers: (process.env.KAFKA_BROKERS ?? 'kafka-1:9092,kafka-2:9092,kafka-3:9092').split(','),
+        schemaRegistry: process.env.KAFKA_SCHEMA_REGISTRY ?? 'http://schema-registry:8081/',
         whitelist: {
-            topic: process.env.KAFKA_WHITELIST_TOPIC ?? 'whitelist_thingy_commands',
-            valueSchemaVersion: parseInt(process.env.KAFKA_WHITELIST_VALUE_SCHEMA_VERSION ?? '1'),
-            keySchemaVersion: parseInt(process.env.KAFKA_WHITELIST_KEY_SCHEMA_VERSION ?? '1')
+            topic: process.env.KAFKA_WHITELIST_TOPIC ?? 'THINGY_WHITELIST_COMMANDS',
+            valueSchemaVersion: process.env.KAFKA_WHITELIST_VALUE_SCHEMA_VERSION ?? 'latest',
+            keySchemaVersion: process.env.KAFKA_WHITELIST_KEY_SCHEMA_VERSION ?? 'latest'
         }
     },
     cache: {
