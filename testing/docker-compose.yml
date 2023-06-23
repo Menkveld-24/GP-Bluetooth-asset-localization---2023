@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  k6:
+    image: grafana/k6
+    container_name: k6
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: tail -f /dev/null
+    deploy:
+      resources:
+        reservations:
+          cpus: '2'
+          memory: 500M

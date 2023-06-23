@@ -10,10 +10,13 @@ import history from 'connect-history-api-fallback';
 import defaultResponseInjector from '@middlewares/DefaultResponseMiddleware';
 import { customErrorResponseHandler } from '@routes/errorHandler';
 import path from 'path';
+// @ts-expect-error - no types available
+import { stMonitor, stHttpLoggerMiddleware } from 'sematext-agent-express';
 
 export function startHTTPServer (): void {
     log('Starting HTTP server...');
 
+    stMonitor.start();
     const app = express();
 
     app.use(
@@ -39,6 +42,7 @@ export function startHTTPServer (): void {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(stHttpLoggerMiddleware);
     app.use(history({
         index: '/index.html',
         rewrites: [
