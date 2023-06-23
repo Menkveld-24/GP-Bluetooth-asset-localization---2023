@@ -6,8 +6,8 @@ const USERNAME = 'admin';
 const PASSWORD = 'admin!';
 
 export const options = {
-  vus: 8,
-  duration: '10s',
+  vus: 300,
+  duration: '60s',
 };
 
 export function setup() {

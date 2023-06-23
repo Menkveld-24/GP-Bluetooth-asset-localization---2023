@@ -42,7 +42,7 @@ export function startHTTPServer (): void {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use(stHttpLoggerMiddleware);
+    // app.use(stHttpLoggerMiddleware);
     app.use(history({
         index: '/index.html',
         rewrites: [
