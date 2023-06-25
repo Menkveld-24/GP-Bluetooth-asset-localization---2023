@@ -8,7 +8,7 @@ export async function uploadSinkConnectorConfig (): Promise<void> {
     log('Uploading sink connector config to connect', `${config.questdbSinkConnector.host}:${config.questdbSinkConnector.port}}`);
     const currentConnectors = await fetch(`${config.questdbSinkConnector.host}:${config.questdbSinkConnector.port}/connectors`);
 
-    if ('QuestDBSinkConnector_MergedThingyLocationBeacons' in await currentConnectors.json()) {
+    if ((await currentConnectors.json()).indexOf('QuestDBSinkConnector_MergedThingyLocationBeacons') !== -1) {
         log('QuestDBSinkConnector_MergedThingyLocationBeacons already exists');
         return;
     }
@@ -20,6 +20,8 @@ export async function uploadSinkConnectorConfig (): Promise<void> {
         },
         body: JSON.stringify(newConfig)
     });
+
+    console.log(response);
 
     if (!response.ok) {
         console.log(response);
