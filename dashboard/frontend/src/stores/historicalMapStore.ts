@@ -6,7 +6,6 @@ import chroma from 'chroma-js';
 import { Ref, ref } from 'vue';
 import { useMapStore } from './mapStore';
 import { useHeatmapSettingsStore } from './heatMapSettingsStore';
-import { map } from 'lodash';
 
 export const useHistoricalMapStore = defineStore('historicalMap', () => {
     const sampleData: { [sampleDuration: string]: HistoricThingies } = {};
