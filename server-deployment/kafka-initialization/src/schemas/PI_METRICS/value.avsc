@@ -1,0 +1,33 @@
+{
+    "doc": "value schema, contains metrics of a raspberry pi",
+    "fields": [
+        {
+            "doc": "The identifier of the pi",
+            "name": "identifier",
+            "type": "string"
+        },
+        {
+            "doc": "The number of packets which are still in redis (and not fully processed)",
+            "name": "length",
+            "type": "int"
+        },
+        {
+            "doc": "The number of total packets added to the queue",
+            "name": "total_packets",
+            "type": "int"
+        },
+        {
+            "doc": "The lag of the packet pusher",
+            "name": "consumer_lag",
+            "type": "int"
+        },
+        {
+            "doc": "The lag of the location pusher",
+            "name": "location_consumer_lag",
+            "type": "int"
+        }
+    ],
+    "name": "ValueSchema",
+    "namespace": "com.menke.pi_metrics",
+    "type": "record"
+}

@@ -35,6 +35,7 @@ interface appConfig {
             whitelist: topic
             raw_beacons: topic
             raw_locations: topic
+            pi_metrics: topic
         }
     }
     questdbSinkConnector: {
@@ -46,7 +47,7 @@ interface appConfig {
 const config: appConfig = {
     questdb: {
         host: process.env.QUESTDB_HOST ?? 'questdb',
-        port: parseInt(process.env.QUESTDB_PORT ?? '9000'),
+        port: parseInt(process.env.QUESTDB_PORT ?? '9009'),
         table_name: process.env.QUESTDB_TABLE_NAME ?? 'THINGY_LOCATION_BEACONS_MERGED'
     },
     ksql: {
@@ -80,6 +81,10 @@ const config: appConfig = {
             raw_locations: {
                 name: process.env.KAFKA_TOPIC_RAW_LOCATIONS ?? 'RAW_THINGY_LOCATIONS',
                 partitions: parseInt(process.env.KAFKA_TOPIC_RAW_LOCATIONS_PARTITIONS ?? '6')
+            },
+            pi_metrics: {
+                name: process.env.KAFKA_TOPIC_PI_METRICS ?? 'PI_METRICS',
+                partitions: parseInt(process.env.KAFKA_TOPIC_PI_METRICS_PARTITIONS ?? '6')
             }
         }
     },

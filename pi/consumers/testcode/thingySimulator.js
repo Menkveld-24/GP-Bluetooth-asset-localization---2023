@@ -3,15 +3,15 @@ const { Redis } = require('ioredis')
 const fs = require('fs');
 
 const MACS = [
-    "AABBCCDDEEFF",
-    "BBAACCDDEEFF"
+    "190D6CBD2996",
+    "C7A947B07FE3"
 ];
 const INTERVAL = 2000;
 const STREAM = 'ble_packets';
 
 const redis = new Redis({
     host: 'localhost',
-    port: 6370,
+    port: 6379,
 });
 
 let thingys = [];

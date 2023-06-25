@@ -7,6 +7,7 @@ import createRawThingyLocationTopic from './topics/rawThingyLocationTopic';
 import createJoinedBeaconLocationsTopic from './topics/mergedLocationBeaconTopic';
 import { createMergedLocationBeaconsTable } from './helpers/questDbHelper';
 import { uploadSinkConnectorConfig } from './helpers/questDbConnectorHelper';
+import createPiMetricsTopic from './topics/piMetricsTopic';
 
 log('Kafka initialization');
 
@@ -20,6 +21,7 @@ async function start (): Promise<void> {
     await createRawThingyLocationTopic();
     await createJoinedBeaconLocationsTopic();
     await uploadSinkConnectorConfig();
+    await createPiMetricsTopic();
     process.exit(0);
 }
 

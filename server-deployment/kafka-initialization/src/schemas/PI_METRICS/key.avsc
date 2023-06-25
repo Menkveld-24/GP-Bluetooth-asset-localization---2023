@@ -1,0 +1,13 @@
+{
+    "doc": "The identifier is a unique name for a pi",
+    "fields": [
+        {
+            "doc": "The identifier of the pi",
+            "name": "identifier",
+            "type": "string"
+        }
+    ],
+    "name": "KeyIdentifier",
+    "namespace": "com.menke.pi_metrics",
+    "type": "record"
+}

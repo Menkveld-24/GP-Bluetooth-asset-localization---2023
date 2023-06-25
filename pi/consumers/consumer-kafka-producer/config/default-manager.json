@@ -4,7 +4,7 @@
         "process_id": 1
     },
     "webserver": {
-        "url": "http://localhost:3000"
+        "url": "https://unimatrix52.nl"
     },
     "redis": {
         "consumer": {
@@ -12,7 +12,7 @@
         },
         "connection": {
             "host": "localhost",
-            "port": 6370
+            "port": 6379
         },
         "packet_stream": "ble_packets",
         "autoclaim": {
@@ -35,27 +35,27 @@
             "192.168.1.201:29093"
         ],
         "consumer_group": "",
-        "whitelist_topic": "whitelist_thingy_commands",
-        "topic": "pi_metrics",
+        "whitelist_topic": "THINGY_WHITELIST_COMMANDS",
+        "topic": "PI_METRICS",
         "schema_registry": "http://192.168.1.201:8081/",
         "topic_schema": {
             "key": {
-                "name": "pi_metrics-key",
-                "version": 1
+                "name": "PI_METRICS-key",
+                "version": "latest"
             },
             "value": {
-                "name": "pi_metrics-value",
-                "version": 1
+                "name": "PI_METRICS-value",
+                "version": "latest"
             }
         },
         "whitelist_topic_schema": {
             "key": {
-                "name": "whitelist_thingy_commands-key",
-                "version": 1
+                "name": "THINGY_WHITELIST_COMMANDS-key",
+                "version": "latest"
             },
             "value": {
-                "name": "whitelist_thingy_commands-value",
-                "version": 1
+                "name": "THINGY_WHITELIST_COMMANDS-value",
+                "version": "latest"
             }
         }
     }
