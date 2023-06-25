@@ -9,7 +9,7 @@ import { type InspectedThingy } from '@app/interfaces/ThingyInspectInterface';
 import path from 'path';
 
 const upload = multer({
-    dest: path.join(__dirname, './public/uploads'),
+    dest: path.join(__dirname, '../public/uploads'),
     fileFilter: imageValidator
 });
 
