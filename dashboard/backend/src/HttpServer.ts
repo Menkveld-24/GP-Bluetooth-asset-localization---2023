@@ -52,7 +52,7 @@ export function startHTTPServer (): void {
     }));
     app.use(defaultResponseInjector);
     app.use('/', express.static(path.join(__dirname, './public')));
-    app.use('/api/images', express.static(path.join(__dirname, './uploads')));
+    app.use('/api/images', express.static(path.join(__dirname, './public/uploads')));
 
     routes.forEach((route) => {
         route.middlewares.forEach((middleware) => {
