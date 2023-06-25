@@ -8,6 +8,7 @@ import config from '@utils/appConfig';
 import { connectToKafka } from '@serviceproviders/KafkaServiceProvider';
 import { getWhitelist } from '@services/KsqlService';
 import { addToWhitelist, removeFromWhitelist } from '@services/KafkaWhitelistService';
+import { waitForKsqlConnection } from '@serviceproviders/KsqlServiceProvider';
 
 const thingyMacs = [
     '04955222F451',
@@ -65,6 +66,7 @@ const thingyMacs = [
 export async function seed (): Promise<void> {
     log('Seeding thingies...');
     await connectToDb();
+    await waitForKsqlConnection();
     await connectToKafka();
     const whitelist = await getWhitelist();
     await Thingy.truncate();
