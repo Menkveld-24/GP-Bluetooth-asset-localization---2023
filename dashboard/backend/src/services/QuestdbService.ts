@@ -3,13 +3,14 @@ import { type graphData, type latestBatteryLocation } from '@app/interfaces/Thin
 import type Thingy from '@app/interfaces/ThingyMetadataInterface';
 import DBThingy from '@models/Thingy';
 import { simpleQuery } from '@serviceproviders/QuestdbServiceProvider';
+import config from '@utils/appConfig';
 
 export async function getLatestThingys (): Promise<Thingy[]> {
     const whitelist = await DBThingy.findAll();
     const whitelistArray = whitelist.map((thingy) => `'${thingy.mac}'`).join(', ');
     if (whitelistArray === '') return [];
 
-    const QUERY = `SELECT mac, humidity, fwVersion, rssi, temperature, co2_ppm, battery, rollover, latitude, longitude, CAST(extract(epoch from timestamp) as DOUBLE) timestamp FROM THINGY_LOCATION_BEACONS_MERGED_5 WHERE mac IN (${whitelistArray}) LATEST ON timestamp PARTITION BY mac;`;
+    const QUERY = `SELECT mac, humidity, fwVersion, rssi, temperature, co2_ppm, battery, rollover, latitude, longitude, CAST(extract(epoch from timestamp) as DOUBLE) timestamp FROM ${config.questdb.thingyTableName} WHERE mac IN (${whitelistArray}) LATEST ON timestamp PARTITION BY mac;`;
     return await simpleQuery(QUERY) as Thingy[];
 }
 
@@ -18,7 +19,7 @@ export async function sampleBy (sampleDuration: string): Promise<HistoricThingie
     const whitelistArray = whitelist.map((thingy) => `'${thingy.mac}'`).join(', ');
     if (whitelistArray === '') return {};
 
-    const QUERY = `SELECT mac, humidity, rssi, temperature, co2_ppm, battery, packetCount, latitude, longitude, CAST(extract(epoch from ts) as DOUBLE) timestamp FROM (SELECT mac, avg(humidity) as humidity, avg(rssi) as rssi, avg(temperature) as temperature, avg(co2_ppm) as co2_ppm, avg(battery) as battery, CAST(count() as INT) packetCount, avg(latitude) as latitude, avg(longitude) as longitude, timestamp as ts FROM THINGY_LOCATION_BEACONS_MERGED_5 WHERE mac IN (${whitelistArray}) SAMPLE BY ${sampleDuration} ALIGN TO CALENDAR GROUP BY mac, ts);`;
+    const QUERY = `SELECT mac, humidity, rssi, temperature, co2_ppm, battery, packetCount, latitude, longitude, CAST(extract(epoch from ts) as DOUBLE) timestamp FROM (SELECT mac, avg(humidity) as humidity, avg(rssi) as rssi, avg(temperature) as temperature, avg(co2_ppm) as co2_ppm, avg(battery) as battery, CAST(count() as INT) packetCount, avg(latitude) as latitude, avg(longitude) as longitude, timestamp as ts FROM ${config.questdb.thingyTableName} WHERE mac IN (${whitelistArray}) SAMPLE BY ${sampleDuration} ALIGN TO CALENDAR GROUP BY mac, ts);`;
     const data = await simpleQuery(QUERY) as historicThingyRecord[];
 
     const historicThingies: HistoricThingies = {};
@@ -49,19 +50,19 @@ export async function sampleBy (sampleDuration: string): Promise<HistoricThingie
 }
 
 export async function getPacketCount (mac: string): Promise<number> {
-    const QUERY = `SELECT CAST(count() as INT) as packetCount FROM THINGY_LOCATION_BEACONS_MERGED_5 WHERE mac = '${mac}'`;
+    const QUERY = `SELECT CAST(count() as INT) as packetCount FROM ${config.questdb.thingyTableName} WHERE mac = '${mac}'`;
     const data = await simpleQuery(QUERY) as Array<{ packetCount: number }>;
     return data[0].packetCount;
 }
 
 export async function getLatestBatteryLocation (mac: string): Promise<latestBatteryLocation> {
-    const QUERY = `SELECT battery, latitude, longitude, CAST(extract(epoch from timestamp) as DOUBLE) timestamp FROM THINGY_LOCATION_BEACONS_MERGED_5 WHERE mac = '${mac}' LATEST ON timestamp PARTITION BY mac;`;
+    const QUERY = `SELECT battery, latitude, longitude, CAST(extract(epoch from timestamp) as DOUBLE) timestamp FROM ${config.questdb.thingyTableName} WHERE mac = '${mac}' LATEST ON timestamp PARTITION BY mac;`;
     const data = await simpleQuery(QUERY) as latestBatteryLocation[];
     return data[0];
 }
 
 function makeGraphQuery (mac: string, field: string): string {
-    return `SELECT ${field} as y, CAST(extract(epoch from timestamp) as DOUBLE) x FROM THINGY_LOCATION_BEACONS_MERGED_5 WHERE mac = '${mac}';`;
+    return `SELECT ${field} as y, CAST(extract(epoch from timestamp) as DOUBLE) x FROM ${config.questdb.thingyTableName} WHERE mac = '${mac}';`;
 }
 
 export async function getBatteryGraph (mac: string): Promise<graphData[]> {

@@ -21,6 +21,7 @@ interface appConfig {
     questdb: {
         host: string
         port: number
+        thingyTableName: string
     }
     redis: {
         host: string
@@ -69,7 +70,8 @@ const config: appConfig = {
     },
     questdb: {
         host: process.env.QUESTDB_HOST ?? 'questdb',
-        port: parseInt(process.env.QUESTDB_PORT ?? '8812')
+        port: parseInt(process.env.QUESTDB_PORT ?? '8812'),
+        thingyTableName: process.env.QUESTDB_THINGY_TABLE ?? 'THINGY_LOCATION_BEACONS_MERGED'
     },
     redis: {
         host: process.env.REDIS_HOST ?? 'redis',
