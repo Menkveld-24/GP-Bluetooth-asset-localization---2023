@@ -20,6 +20,7 @@ async function start (): Promise<void> {
     await createRawThingyLocationTopic();
     await createJoinedBeaconLocationsTopic();
     await uploadSinkConnectorConfig();
+    process.exit(0);
 }
 
 start().catch((err) => {
