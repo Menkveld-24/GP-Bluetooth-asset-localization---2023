@@ -1,9 +1,18 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+
+interface heatmapSetting {
+    sensitivity: string;
+    minimumIntensity: string;
+    maximumIntensity: string;
+}
+interface heatmapSettings {
+    weight: heatmapSetting;
+    intensity: heatmapSetting;
+    radius: heatmapSetting;
+}
 
 export const useHeatmapSettingsStore = defineStore('heatmapSettingsStore', () => {
-    const radiusSensitivity = ref('75');
-    const radiusIntensity = ref('63');
     const pointSize = ref('5');
     const lineThickness = ref('2');
 
@@ -13,5 +22,23 @@ export const useHeatmapSettingsStore = defineStore('heatmapSettingsStore', () =>
         highest: '#1c9099',
     });
 
-    return { radiusIntensity, radiusSensitivity, heatMapColors, pointSize, lineThickness };
+    const heatmapSettings: heatmapSettings = reactive({
+        weight: {
+            sensitivity: '5',
+            minimumIntensity: '4',
+            maximumIntensity: '10',
+        },
+        intensity: {
+            sensitivity: '5',
+            minimumIntensity: '0.4',
+            maximumIntensity: '10',
+        },
+        radius: {
+            sensitivity: '5',
+            minimumIntensity: '4',
+            maximumIntensity: '10',
+        },
+    });
+
+    return { heatmapSettings, heatMapColors, pointSize, lineThickness };
 });

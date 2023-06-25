@@ -6,6 +6,7 @@ import chroma from 'chroma-js';
 import { Ref, ref } from 'vue';
 import { useMapStore } from './mapStore';
 import { useHeatmapSettingsStore } from './heatMapSettingsStore';
+import { map } from 'lodash';
 
 export const useHistoricalMapStore = defineStore('historicalMap', () => {
     const sampleData: { [sampleDuration: string]: HistoricThingies } = {};
@@ -66,7 +67,6 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
             }
         }
 
-        console.log('old min max', lastMinMaxTimestamp.min, lastMinMaxTimestamp.max);
         // regenerating previously selected maps
         for (const mac of selectedThingies.value) {
             displayNewThingy(mac, lastMinMaxTimestamp.min, lastMinMaxTimestamp.max);
@@ -114,7 +114,6 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
     function displayNewThingy(mac: string, minTime: number, maxTime: number) {
         const coordinates = sampleData[selectedSampleDuration.value][mac].locations;
         const indexes = findIndexes(coordinates, minTime, maxTime);
-        console.log(indexes);
         const metaPoints = generateMetaPoints(coordinates, indexes, mac);
 
         createLineLayer(mac, indexes, coordinates);
@@ -198,15 +197,21 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
                 'heatmap-weight': {
                     property: 'packetCount',
                     stops: [
-                        [1, 0],
-                        [62, 1],
+                        [1, parseInt(mapSettings.heatmapSettings.weight.minimumIntensity)],
+                        [
+                            parseInt(mapSettings.heatmapSettings.weight.sensitivity),
+                            parseInt(mapSettings.heatmapSettings.weight.maximumIntensity),
+                        ],
                     ],
                 },
                 // increase intensity as zoom level increases
                 'heatmap-intensity': {
                     stops: [
-                        [1, 0],
-                        [60, 7],
+                        [1, parseInt(mapSettings.heatmapSettings.intensity.minimumIntensity)],
+                        [
+                            parseInt(mapSettings.heatmapSettings.intensity.sensitivity),
+                            parseInt(mapSettings.heatmapSettings.intensity.maximumIntensity),
+                        ],
                     ],
                 },
                 // assign color values be applied to points depending on their density
@@ -227,8 +232,11 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
                 'heatmap-radius': {
                     property: 'packetCount',
                     stops: [
-                        [1, 1],
-                        [parseInt(mapSettings.radiusSensitivity), parseInt(mapSettings.radiusIntensity)],
+                        [1, parseInt(mapSettings.heatmapSettings.radius.minimumIntensity)],
+                        [
+                            parseInt(mapSettings.heatmapSettings.radius.sensitivity),
+                            parseInt(mapSettings.heatmapSettings.radius.maximumIntensity),
+                        ],
                     ],
                 },
                 // decrease opacity to transition into the circle layer
@@ -265,7 +273,7 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
         stopLoading();
     }
 
-    function updateHeatMapWeights() {
+    function updateHeatMapSettings() {
         const layer = mapStore.map.getLayer(heatMapLayerName()) as mapboxgl.HeatmapLayer;
         if (layer === undefined) return;
 
@@ -273,8 +281,32 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
         mapStore.map.setPaintProperty(heatMapLayerName(), 'heatmap-radius', {
             property: 'packetCount',
             stops: [
-                [1, 1],
-                [parseInt(mapSettings.radiusSensitivity), parseInt(mapSettings.radiusIntensity)],
+                [1, parseInt(mapSettings.heatmapSettings.radius.minimumIntensity)],
+                [
+                    parseInt(mapSettings.heatmapSettings.radius.sensitivity),
+                    parseInt(mapSettings.heatmapSettings.radius.maximumIntensity),
+                ],
+            ],
+        });
+
+        mapStore.map.setPaintProperty(heatMapLayerName(), 'heatmap-weight', {
+            property: 'packetCount',
+            stops: [
+                [1, parseInt(mapSettings.heatmapSettings.weight.minimumIntensity)],
+                [
+                    parseInt(mapSettings.heatmapSettings.weight.sensitivity),
+                    parseInt(mapSettings.heatmapSettings.weight.maximumIntensity),
+                ],
+            ],
+        });
+
+        mapStore.map.setPaintProperty(heatMapLayerName(), 'heatmap-intensity', {
+            stops: [
+                [1, parseInt(mapSettings.heatmapSettings.intensity.minimumIntensity)],
+                [
+                    parseInt(mapSettings.heatmapSettings.intensity.sensitivity),
+                    parseInt(mapSettings.heatmapSettings.intensity.maximumIntensity),
+                ],
             ],
         });
         stopLoading();
@@ -676,7 +708,6 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
     function redrawSelectedThingies(minTime: number, maxTime: number) {
         startLoading();
         lastMinMaxTimestamp = { min: minTime, max: maxTime };
-        console.log('new min max', minTime, maxTime);
         for (const mac of selectedThingies.value) {
             displayNewThingy(mac, minTime, maxTime);
         }
@@ -701,7 +732,7 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
         toggleLineLayer,
         toggleHeatMapLayer,
         updateHeatMapColor,
-        updateHeatMapWeights,
+        updateHeatMapSettings,
         updatePointSize,
         updateLineThickness,
     };

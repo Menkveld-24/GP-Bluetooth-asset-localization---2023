@@ -7,27 +7,106 @@
             <Settings />
         </div>
         <div v-if="settingsOpen" class="transition-all duration-500 p-4 rounded-md shadow-md pt-4 bg-white">
-            <div class="mr-4">Heatmap settings</div>
+            <div class="mr-4">Heatmap weight settings</div>
             <div>
-                <div class="text-sky-950 text-sm">Intensity</div>
+                <div class="text-sky-950 text-sm">Minimum intensity</div>
                 <input
-                    v-model="heatmapSettings.radiusIntensity"
+                    v-model="heatmapSettings.heatmapSettings.weight.minimumIntensity"
                     typeof="number"
                     type="range"
                     min="1"
-                    max="300"
-                    @input="updateWeight"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div>
+                <div class="text-sky-950 text-sm">Maximum Intensity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.weight.maximumIntensity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
                 />
             </div>
             <div>
                 <div class="text-sky-950 text-sm">Sensitivity</div>
                 <input
-                    v-model="heatmapSettings.radiusSensitivity"
+                    v-model="heatmapSettings.heatmapSettings.weight.sensitivity"
                     typeof="number"
                     type="range"
                     min="1"
-                    max="150"
-                    @input="updateWeight"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div class="mr-4">Heatmap intensity settings</div>
+            <div>
+                <div class="text-sky-950 text-sm">Minimum intensity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.intensity.minimumIntensity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div>
+                <div class="text-sky-950 text-sm">Maximum Intensity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.intensity.maximumIntensity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div>
+                <div class="text-sky-950 text-sm">Sensitivity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.intensity.sensitivity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div class="mr-4">Heatmap radius settings</div>
+            <div>
+                <div class="text-sky-950 text-sm">Minimum intensity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.radius.minimumIntensity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div>
+                <div class="text-sky-950 text-sm">Maximum Intensity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.radius.maximumIntensity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
+                />
+            </div>
+            <div>
+                <div class="text-sky-950 text-sm">Sensitivity</div>
+                <input
+                    v-model="heatmapSettings.heatmapSettings.radius.sensitivity"
+                    typeof="number"
+                    type="range"
+                    min="1"
+                    max="50"
+                    @input="updateHeatMapSettings"
                 />
             </div>
             <div class="mr-4">Color settings</div>
@@ -99,8 +178,8 @@ const updateColor = debounce(() => {
     historicalMap.updateHeatMapColor();
 }, 200);
 
-const updateWeight = debounce(() => {
-    historicalMap.updateHeatMapWeights();
+const updateHeatMapSettings = debounce(() => {
+    historicalMap.updateHeatMapSettings();
 }, 200);
 
 const updatePointSize = debounce(() => {
