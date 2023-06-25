@@ -4,6 +4,7 @@ import { generateImage } from 'js-image-generator';
 import { log } from '@utils/logger';
 import path from 'path';
 import { writeFileSync } from 'fs';
+import config from '@utils/appConfig';
 
 const thingyMacs = [
     '04955222F451',
@@ -71,7 +72,11 @@ export async function seed (): Promise<void> {
                 log('Error generating image', err);
                 throw err;
             }
-            writeFileSync(path.join(__dirname, `../../public/uploads/${randomUUID}`), image.data);
+            if (config.isProduction) {
+                writeFileSync(path.join(__dirname, `../public/uploads/${randomUUID}`), image.data);
+            } else {
+                writeFileSync(path.join(__dirname, `../../public/uploads/${randomUUID}`), image.data);
+            }
         });
 
         await Thingy.create({
