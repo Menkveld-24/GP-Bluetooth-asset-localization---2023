@@ -6,9 +6,10 @@ import { addToWhitelist, removeFromWhitelist } from '@services/KafkaWhitelistSer
 import thingyExists from '@middlewares/ThingyExistsMiddleware';
 import { getBatteryGraph, getCo2PPMGraph, getHumidityGraph, getLatestBatteryLocation, getPacketCount, getTemperatureGraph } from '@services/QuestdbService';
 import { type InspectedThingy } from '@app/interfaces/ThingyInspectInterface';
+import path from 'path';
 
 const upload = multer({
-    dest: 'public/uploads/',
+    dest: path.join(__dirname, './public/uploads'),
     fileFilter: imageValidator
 });
 
