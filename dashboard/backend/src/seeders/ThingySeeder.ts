@@ -75,7 +75,7 @@ export async function seed (): Promise<void> {
             if (config.isProduction) {
                 writeFileSync(path.join(__dirname, `../../dist/public/uploads/${randomUUID}`), image.data);
             } else {
-                writeFileSync(path.join(__dirname, `../../public/uploads/${randomUUID}`), image.data);
+                writeFileSync(path.join(__dirname, `../public/uploads/${randomUUID}`), image.data);
             }
         });
 
