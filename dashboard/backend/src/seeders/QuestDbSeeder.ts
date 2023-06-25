@@ -59,7 +59,7 @@ const thingyMacs = [
 const randomEntries = parseInt(process.env.npm_config_qdbcount ?? '1000');
 
 export async function seed (): Promise<void> {
-    log('Seeding questdb...');
+    log(`Seeding questdb... ${randomEntries}`);
     await connectToQuestDB();
     log('Successfully truncated users!');
 
