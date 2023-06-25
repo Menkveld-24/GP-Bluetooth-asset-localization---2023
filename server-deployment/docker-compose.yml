@@ -521,6 +521,7 @@ services:
       - confluent
     volumes:
       - ./dashboard/.env:/app/.env
+      - ./dashboard/images:/app/public/uploads
     depends_on:
       - mysql
       - redis
