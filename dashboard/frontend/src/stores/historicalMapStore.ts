@@ -488,6 +488,34 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
         return mapStore.map.getLayer(lineLayerName(mac)) !== undefined;
     }
 
+    function deletePointsLayers(mac?: string) {
+        if (mac === undefined) {
+            for (const mac of selectedThingies.value) {
+                deletePointsLayers(mac);
+            }
+            return;
+        }
+
+        if (!hasPointsLayer(mac)) return;
+
+        mapStore.map.removeLayer(pointsLayerName(mac));
+        mapStore.map.removeSource(pointsLayerName(mac));
+    }
+
+    function deleteLineLayers(mac?: string) {
+        if (mac === undefined) {
+            for (const mac of selectedThingies.value) {
+                deleteLineLayers(mac);
+            }
+            return;
+        }
+
+        if (!hasLineLayer(mac)) return;
+
+        mapStore.map.removeLayer(lineLayerName(mac));
+        mapStore.map.removeSource(lineLayerName(mac));
+    }
+
     function hidePointsLayers(mac?: string) {
         if (mac === undefined) {
             for (const mac of selectedThingies.value) {
@@ -641,8 +669,8 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
 
     function hideAllLayers() {
         hideHeatMapLayer();
-        hidePointsLayers();
-        hideLineLayers();
+        deletePointsLayers();
+        deleteLineLayers();
     }
 
     function redrawSelectedThingies(minTime: number, maxTime: number) {

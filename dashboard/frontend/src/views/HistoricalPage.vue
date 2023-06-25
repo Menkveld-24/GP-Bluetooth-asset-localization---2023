@@ -52,13 +52,28 @@
         </div>
 
         <label class="text-sm text-sky-950">Thingies</label>
-        <div class="shadow-md rounded-md p-2 gap-2 h-40 overflow-y-scroll bg-white flex flex-wrap relative mb-2">
+        <div class="shadow-md rounded-md p-2 gap-2 h-64 overflow-y-scroll bg-white flex flex-wrap relative mb-2">
             <div
                 class="absolute h-full w-full inset-0 bg-sky-200/30 cursor-not-allowed z-10"
                 :hidden="historicalMap.selectedSampleDuration !== ''"
             ></div>
+            <div class="flex h-10">
+                <input
+                    v-model="search"
+                    type="text"
+                    autocomplete="off"
+                    class="h-full bg-white/60 block pl-2 placeholder w-full rounded-md border-0 py-1.5 pr-10 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                    placeholder="MAC or name"
+                />
+                <button
+                    class="min-w-fit px-1 ml-2 text-center h-full bg-sky-600 rounded-md px-1 duration-500 hover:bg-sky-800 text-white"
+                    @click="deselectAll"
+                >
+                    Hide all
+                </button>
+            </div>
             <div
-                v-for="thingy in sampledData"
+                v-for="thingy in searchResults"
                 :key="thingy.thingy.mac"
                 class="h-fit group mt-2 w-fit cursor-pointer rounded-md text-white shadow-md duration-500 overflow-hidden"
                 @click="historicalMap.toggleThingy(thingy.thingy.mac, filterMinTime, filterMaxTime)"
@@ -92,7 +107,7 @@ import analyticsIcon from '@assets/lotties/system-outline-10-analytics.json?url'
 import TimeSliderComponent from '@components/TimeSliderComponent.vue';
 import { HistoricThingies } from '@/consts/interfaces';
 import { useHistoricalMapStore } from '@stores/historicalMapStore';
-import { ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 
 const availableSampleDurations = ['1m', '5m', '10m', '15m', '30m'];
 const historicalMap = useHistoricalMapStore();
@@ -103,6 +118,8 @@ const maxTime = ref(0);
 
 const filterMinTime = ref(0);
 const filterMaxTime = ref(0);
+
+const search = ref('');
 
 async function selectSample(sampleDuration: string) {
     sampledData.value = await historicalMap.getSampledData(sampleDuration);
@@ -123,10 +140,30 @@ function updateMinMaxTime() {
     maxTime.value = Math.floor(max * 1000);
 }
 
+const searchResults = computed(() => {
+    if (search.value === '') return sampledData.value;
+
+    const results: HistoricThingies = {};
+    const searchable: string = search.value.toUpperCase();
+
+    for (const [mac, thingy] of Object.entries(sampledData.value)) {
+        if (mac.toUpperCase().includes(searchable) || thingy.thingy.name.toUpperCase().includes(searchable)) {
+            results[mac] = thingy;
+        }
+    }
+
+    return results;
+});
+
 function selectedTimeFilter(min: number, max: number) {
     filterMinTime.value = min;
     filterMaxTime.value = max;
     historicalMap.redrawSelectedThingies(min, max);
+}
+
+function deselectAll() {
+    historicalMap.hideAllLayers();
+    historicalMap.selectedThingies = [];
 }
 </script>
 
