@@ -5,6 +5,9 @@ import { log } from '@utils/logger';
 import path from 'path';
 import { writeFileSync } from 'fs';
 import config from '@utils/appConfig';
+import { connectToKafka } from '@serviceproviders/KafkaServiceProvider';
+import { getWhitelist } from '@services/KsqlService';
+import { addToWhitelist, removeFromWhitelist } from '@services/KafkaWhitelistService';
 
 const thingyMacs = [
     '04955222F451',
@@ -62,8 +65,17 @@ const thingyMacs = [
 export async function seed (): Promise<void> {
     log('Seeding thingies...');
     await connectToDb();
+    await connectToKafka();
+    const whitelist = await getWhitelist();
     await Thingy.truncate();
     log('Successfully truncated thingies!');
+
+    log('Clearing whitelist...');
+    for (const entry of whitelist) {
+        if (entry.WHITELISTED) {
+            await removeFromWhitelist(entry.MAC);
+        }
+    }
 
     for (const mac of thingyMacs) {
         const randomUUID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -85,6 +97,8 @@ export async function seed (): Promise<void> {
             description: 'A thingy',
             image: randomUUID
         });
+
+        await addToWhitelist(mac);
     }
 
     log('Successfully seeded thingies!');
