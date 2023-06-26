@@ -1,4 +1,4 @@
-import { createTopic, uploadSchemas } from 'helpers/topicCreationHelper';
+import { createTopic, uploadSchemas } from '../helpers/topicCreationHelper';
 import { log } from '../utils/logger';
 import config from '../utils/configLoader';
 
