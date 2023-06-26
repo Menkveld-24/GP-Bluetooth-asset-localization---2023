@@ -476,7 +476,7 @@ services:
 
   redis:
     container_name: redis
-    image: redis/redis-stack:7.2.0-RC1
+    image: redis/redis-stack:7.2.0-RC2
     ports:
       - "6379:6379"
       - "8001:8001"
