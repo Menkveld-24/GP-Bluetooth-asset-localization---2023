@@ -53,21 +53,21 @@ services:
     depends_on:
       - redis
       
-  ble-sniffer-producer:
-    build: 
-      context: ../ble-sniffer-producer
-      dockerfile: ../deployment/Dockerfile.python
-    container_name: ble-sniffer-producer
-    hostname: ble-sniffer-producer
-    volumes:
-      - ./python-config/config.ini:/usr/src/app/config.ini
-    networks:
-      - pi
-    depends_on:
-      - redis
-    privileged: true
-    devices:
-      - /dev/....:/dev/ttyUSB0
+  # ble-sniffer-producer:
+  #   build: 
+  #     context: ../ble-sniffer-producer
+  #     dockerfile: ../deployment/Dockerfile.python
+  #   container_name: ble-sniffer-producer
+  #   hostname: ble-sniffer-producer
+  #   volumes:
+  #     - ./python-config/config.ini:/usr/src/app/config.ini
+  #   networks:
+  #     - pi
+  #   depends_on:
+  #     - redis
+  #   privileged: true
+  #   devices:
+  #     - /dev/....:/dev/ttyUSB0
     
 networks:
   pi:

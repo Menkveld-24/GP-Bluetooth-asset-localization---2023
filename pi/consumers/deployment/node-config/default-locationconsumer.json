@@ -4,14 +4,14 @@
         "process_id": 3
     },
     "webserver": {
-        "url": "http://localhost:3000"
+        "url": "https://unimatrix52.nl"
     },
     "redis": {
         "consumer": {
             "group": "kafka_location_pusher"
         },
         "connection": {
-            "host": "redis",
+            "host": "localhost",
             "port": 6379
         },
         "packet_stream": "ble_packets",
@@ -19,7 +19,7 @@
             "interval_ms": 1000,
             "min_idle_time_ms": 10000
         },
-        "read_interval_ms": 1000,
+        "read_interval_ms": 0,
         "claim_size": 5,
         "manager": {
             "consumer_groups": []
@@ -32,27 +32,27 @@
             "192.168.1.201:29093"
         ],
         "consumer_group": "",
-        "whitelist_topic": "whitelist_thingy_commands",
-        "topic": "thingy_locations",
+        "whitelist_topic": "THINGY_WHITELIST_COMMANDS",
+        "topic": "RAW_THINGY_LOCATIONS",
         "schema_registry": "http://192.168.1.201:8081/",
         "topic_schema": {
             "key": {
-                "name": "thingy_locations-key",
-                "version": 1
+                "name": "RAW_THINGY_LOCATIONS-key",
+                "version": "latest"
             },
             "value": {
-                "name": "thingy_locations-value",
-                "version": 1
+                "name": "RAW_THINGY_LOCATIONS-value",
+                "version": "latest"
             }
         },
         "whitelist_topic_schema": {
             "key": {
-                "name": "thingy_beacons-key",
-                "version": 1
+                "name": "RAW_THINGY_LOCATIONS-key",
+                "version": "latest"
             },
             "value": {
-                "name": "thingy_beacons-value",
-                "version": 1
+                "name": "RAW_THINGY_LOCATIONS-value",
+                "version": "latest"
             }
         }
     }

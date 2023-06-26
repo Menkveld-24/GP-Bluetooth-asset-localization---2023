@@ -4,7 +4,7 @@ process.env["KAFKAJS_NO_PARTITIONER_WARNING"] = "true";
 import { RedisHelper, RedisPacketList } from './utils/RedisHelper';
 import { KafkaHelper } from './utils/KafkaHelper';
 import { ConsumerConfig, getConsumerConfig } from './utils/config';
-import { get } from 'config';
+import c, { get } from 'config';
 import { getRandomInt, log } from './utils/utils';
 
 let whitelist: Array<string> = [];
@@ -32,7 +32,8 @@ const LOOP_INTERVAL_MS: number = config.redis.read_interval_ms;
 
     while(true) {
         await redisHelper.consume(whitelist, handlePackets);
-        await new Promise(resolve => setTimeout(resolve, LOOP_INTERVAL_MS + getRandomInt(50, 250)));
+        if (LOOP_INTERVAL_MS === 0) continue;
+        await new Promise(resolve => setTimeout(resolve, LOOP_INTERVAL_MS));
     }
 
 })().catch(e => {
