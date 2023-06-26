@@ -11,7 +11,7 @@
             "group": "kafka_location_pusher"
         },
         "connection": {
-            "host": "localhost",
+            "host": "redis",
             "port": 6379
         },
         "packet_stream": "ble_packets",

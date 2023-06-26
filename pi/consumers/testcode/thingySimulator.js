@@ -10,7 +10,7 @@ const INTERVAL = 2000;
 const STREAM = 'ble_packets';
 
 const redis = new Redis({
-    host: 'localhost',
+    host: 'pi.local',
     port: 6379,
 });
 
@@ -26,6 +26,7 @@ class randomThingy {
     mac = '';
     randomGeoJson = {};
     index = 0;
+    startTime = Date.now();
 
     constructor(mac) {
         this.mac = mac;
@@ -53,7 +54,7 @@ class randomThingy {
 
         return JSON.stringify({
             'mac': this.mac,
-            'timestamp': Date.now(),//1686342020000,//'2023-06-09T20:20:20.588Z',//new Date(),
+            'timestamp': this.startTime + this.index,//1686342020000,//'2023-06-09T20:20:20.588Z',//new Date(),
             'rssi': this.#randomIntFromInterval(-50, -20),
             'fwVersion': this.#randomIntFromInterval(1, 5),
             'rollover': this.#randomIntFromInterval(0, 255),
