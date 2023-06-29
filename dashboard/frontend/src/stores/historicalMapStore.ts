@@ -2,7 +2,7 @@ import { HistoricThingies, defaultResponse, timestampIndexes, coordinatesList, c
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import { useToastStore } from './toastStore';
-import chroma from 'chroma-js';
+import { scale } from 'chroma-js';
 import { Ref, ref } from 'vue';
 import { useMapStore } from './mapStore';
 import { useHeatmapSettingsStore } from './heatMapSettingsStore';
@@ -59,7 +59,7 @@ export const useHistoricalMapStore = defineStore('historicalMap', () => {
             sampleData[sampleDuration] = await retrieveBySample(sampleDuration);
             const sampleCount = Object.keys(sampleData[sampleDuration]).length;
 
-            const colors = chroma.scale('Paired').mode('lab').colors(sampleCount);
+            const colors = scale('Paired').mode('lab').colors(sampleCount);
 
             for (const [index, mac] of Object.keys(sampleData[sampleDuration]).entries()) {
                 sampleData[sampleDuration][mac].color = colors[index];

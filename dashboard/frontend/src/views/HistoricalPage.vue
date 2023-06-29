@@ -6,7 +6,7 @@
                 class="transition-all duration-1000 absolute h-full w-full inset-0 border-2 rounded-md cursor-wait z-40 flex"
             >
                 <div class="absolute inset-0 w-full cursor-wait rounded-md border-2 bg-white/60 animate-pulse"></div>
-                <lord-icon trigger="loop" :src="analyticsIcon" class="m-auto z-50"></lord-icon>
+                <DataTransferDown class="m-auto z-50" />
             </div>
         </transition>
         <label class="text-sm text-sky-950">Sample by</label>
@@ -103,11 +103,11 @@
 </template>
 
 <script setup lang="ts">
-import analyticsIcon from '@assets/lotties/system-outline-10-analytics.json?url';
 import TimeSliderComponent from '@components/TimeSliderComponent.vue';
 import { HistoricThingies } from '@/consts/interfaces';
 import { useHistoricalMapStore } from '@stores/historicalMapStore';
 import { computed, ref, Ref } from 'vue';
+import { DataTransferDown } from '@iconoir/vue';
 
 const availableSampleDurations = ['1m', '5m', '10m', '15m', '30m'];
 const historicalMap = useHistoricalMapStore();

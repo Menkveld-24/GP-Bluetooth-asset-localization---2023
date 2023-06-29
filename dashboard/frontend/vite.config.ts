@@ -1,13 +1,15 @@
 // vite.config.ts
-import { defineConfig } from 'vite';
+import { PluginOption, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslint from 'vite-plugin-eslint';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
+import viteCompression from 'vite-plugin-compression';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), eslint(), tsConfigPaths()],
+    plugins: [vue(), eslint(), tsConfigPaths(), visualizer() as PluginOption, viteCompression()],
     resolve: {
         alias: {
             '@components': path.resolve(__dirname, './src/components'),
@@ -29,5 +31,5 @@ export default defineConfig({
                 secure: false,
             },
         },
-    },
+    }
 });
