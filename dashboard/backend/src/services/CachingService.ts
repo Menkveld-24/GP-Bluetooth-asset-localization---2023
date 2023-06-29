@@ -15,6 +15,7 @@ import config from '@utils/appConfig';
 export async function setJson (key: string, data: any[] | object, ttl: number = config.cache.ttl): Promise<boolean> {
     const result = await redis.call('JSON.SET', key, '$', JSON.stringify(data));
     if (result === 'OK') {
+        if (key === 'last-locations') ttl = 5;
         await redis.expire(key, ttl);
         return true;
     }
