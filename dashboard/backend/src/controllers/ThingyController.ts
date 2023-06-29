@@ -7,6 +7,7 @@ import thingyExists from '@middlewares/ThingyExistsMiddleware';
 import { getBatteryGraph, getCo2PPMGraph, getHumidityGraph, getLatestBatteryLocation, getPacketCount, getTemperatureGraph } from '@services/QuestdbService';
 import { type InspectedThingy } from '@app/interfaces/ThingyInspectInterface';
 import path from 'path';
+import { getOrSetJson } from '@services/CachingService';
 
 const upload = multer({
     dest: path.join(__dirname, '../public/uploads'),
@@ -48,20 +49,23 @@ router.post(
 // eslint-disable-next-line
 router.get('/inspect/:thingyId', thingyExists, async (req: Request, res: Response) => {
 
-    const info: InspectedThingy = {
-        mac: req.body.thingy.mac,
-        thingy: req.body.thingy,
-        latestRecord: await getLatestBatteryLocation(req.body.thingy.mac),
-        packetCount: await getPacketCount(req.body.thingy.mac),
-        graphData: {
-            battery: await getBatteryGraph(req.body.thingy.mac),
-            temperature: await getTemperatureGraph(req.body.thingy.mac),
-            humidity: await getHumidityGraph(req.body.thingy.mac),
-            co2_ppm: await getCo2PPMGraph(req.body.thingy.mac)
-        }
-    };
+    const inspectedThingy = await getOrSetJson(`thingy-info-${req.params.thingyId}`, async () => {
+        const info: InspectedThingy = {
+            mac: req.body.thingy.mac,
+            thingy: req.body.thingy,
+            latestRecord: await getLatestBatteryLocation(req.body.thingy.mac),
+            packetCount: await getPacketCount(req.body.thingy.mac),
+            graphData: {
+                battery: await getBatteryGraph(req.body.thingy.mac),
+                temperature: await getTemperatureGraph(req.body.thingy.mac),
+                humidity: await getHumidityGraph(req.body.thingy.mac),
+                co2_ppm: await getCo2PPMGraph(req.body.thingy.mac)
+            }
+        };
+        return info;
+    });
 
-    res.success(info, `Thingy ${req.params.thingyId}`);
+    res.success(inspectedThingy, `Thingy ${req.params.thingyId}`);
 });
 
 // eslint-disable-next-line

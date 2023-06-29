@@ -52,6 +52,10 @@ export async function getJson (key: string): Promise<object | any[] | null> {
  * @returns {Promise<object>} - The data from the cache or the get function
  */
 export async function getOrSetJson (key: string, get: () => Promise<object | any[]> | object | any[]): Promise<object> {
+    if (!config.cache.enabled) {
+        return await get();
+    }
+
     const result = await getJson(key);
     if (result === null) {
         const data = await get();
