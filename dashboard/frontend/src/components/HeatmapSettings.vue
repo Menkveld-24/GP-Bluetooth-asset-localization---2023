@@ -167,7 +167,7 @@
 import { Settings } from '@iconoir/vue';
 import { useHeatmapSettingsStore } from '@stores/heatMapSettingsStore';
 import { useHistoricalMapStore } from '@stores/historicalMapStore';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { ref } from 'vue';
 
 const settingsOpen = ref(false);

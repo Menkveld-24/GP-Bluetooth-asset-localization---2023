@@ -30,7 +30,7 @@
 import ThingyCard from '@components/ThingyCard.vue';
 import { useThingyMetaStore } from '@stores/thingyMetaStore';
 import { Ref, ref } from 'vue';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 const thingyStore = useThingyMetaStore();
 

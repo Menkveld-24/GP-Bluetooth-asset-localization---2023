@@ -59,7 +59,7 @@
 import axios from 'axios';
 import { Ref, ref } from 'vue';
 import { useToastStore } from '@stores/toastStore';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useThingyMetaStore } from '@stores/thingyMetaStore';
 
 interface defaultResponse {
