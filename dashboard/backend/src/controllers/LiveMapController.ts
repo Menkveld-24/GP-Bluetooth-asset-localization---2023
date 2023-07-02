@@ -6,7 +6,7 @@ const router = express.Router();
 
 // eslint-disable-next-line
 router.get('/last-locations', async (req: Request, res: Response) => {
-    const thingys = getOrSetJson('last-locations', async () => {
+    const thingys = await getOrSetJson('last-locations', async () => {
         return await getLatestThingys();
     });
     res.success(thingys, `Last locations: ${Date.now()}`);
