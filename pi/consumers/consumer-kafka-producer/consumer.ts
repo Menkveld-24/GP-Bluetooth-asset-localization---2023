@@ -40,7 +40,14 @@ const LOOP_INTERVAL_MS: number = config.redis.read_interval_ms;
     console.log(e);
 });
 
-
+/**
+ * Callback function for handling packets, this will be called when there are packets available
+ * @date 3-7-2023 - 19:21:56
+ *
+ * @async
+ * @param {RedisPacketList} data
+ * @returns {Promise<void>}
+ */
 async function handlePackets(data: RedisPacketList): Promise<void>
 {
     // We read packets but they weren't whitelisted, so we just acknowledge them

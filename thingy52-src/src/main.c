@@ -55,7 +55,7 @@ void sentAdvertisement(struct bt_le_ext_adv *adv, struct bt_le_ext_adv_sent_info
     k_sleep(K_MSEC(10));
     dk_set_led(ADV_DONE_LED, true);
 
-    // k_sleep(K_MSEC(ADV_INTERVAL_MS));
+    k_sleep(K_MSEC(ADV_INTERVAL_MS));
     sendAdvertisement();
 }
 

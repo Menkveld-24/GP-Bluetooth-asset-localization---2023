@@ -1,0 +1,326 @@
+{
+    "root_group": {
+        "groups": [
+            {
+                "groups": [],
+                "checks": [
+                    {
+                        "name": "logged in successfully",
+                        "path": "::setup::logged in successfully",
+                        "id": "9be2eac02d552796de2e3067eacc0d1a",
+                        "passes": 1,
+                        "fails": 0
+                    }
+                ],
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a"
+            },
+            {
+                "path": "::Live page (/live)",
+                "id": "b36eca0f2b8646d3f888ca00058a970b",
+                "groups": [
+                    {
+                        "groups": [],
+                        "checks": [
+                            {
+                                "id": "714a21790d1cfd0926b4b69bdc2e4e23",
+                                "passes": 18218,
+                                "fails": 0,
+                                "name": "Visited live page",
+                                "path": "::Live page (/live)::Visit live page::Visited live page"
+                            }
+                        ],
+                        "name": "Visit live page",
+                        "path": "::Live page (/live)::Visit live page",
+                        "id": "b9bdee6d3993fdaf5a420e060285c9d8"
+                    },
+                    {
+                        "checks": [
+                            {
+                                "id": "2791845b221408e1043b8d49c114ad6f",
+                                "passes": 18218,
+                                "fails": 0,
+                                "name": "Retrieved user information",
+                                "path": "::Live page (/live)::Retrieving user information::Retrieved user information"
+                            }
+                        ],
+                        "name": "Retrieving user information",
+                        "path": "::Live page (/live)::Retrieving user information",
+                        "id": "9998d105683859bb9afb61aa5290e072",
+                        "groups": []
+                    },
+                    {
+                        "name": "Retrieving last locations (/api/live/last-locations)",
+                        "path": "::Live page (/live)::Retrieving last locations (/api/live/last-locations)",
+                        "id": "0e090bf201292899d33a782ad5ff0774",
+                        "groups": [],
+                        "checks": [
+                            {
+                                "fails": 0,
+                                "name": "Retrieved last locations",
+                                "path": "::Live page (/live)::Retrieving last locations (/api/live/last-locations)::Retrieved last locations",
+                                "id": "1ace9aef730348c53148502f05b84735",
+                                "passes": 18218
+                            }
+                        ]
+                    }
+                ],
+                "checks": [],
+                "name": "Live page (/live)"
+            },
+            {
+                "name": "Visiting thingies page (/thingies)",
+                "path": "::Visiting thingies page (/thingies)",
+                "id": "5fc89d695ddc7b75b624f4b3023e5ec3",
+                "groups": [],
+                "checks": [
+                    {
+                        "id": "cb383f8be904b9b1fdcab6a1b3efe62a",
+                        "passes": 18218,
+                        "fails": 0,
+                        "name": "Visited thingies page",
+                        "path": "::Visiting thingies page (/thingies)::Visited thingies page"
+                    }
+                ]
+            },
+            {
+                "name": "Visiting historical page (/historical)",
+                "path": "::Visiting historical page (/historical)",
+                "id": "0f7a628de34ec9add04f6f3f1272b50f",
+                "groups": [
+                    {
+                        "path": "::Visiting historical page (/historical)::Visit historical page",
+                        "id": "d7d72ea7e254914a410887d4926dbbe3",
+                        "groups": [],
+                        "checks": [
+                            {
+                                "path": "::Visiting historical page (/historical)::Visit historical page::Visited historical page",
+                                "id": "e223af0238d3fdda67895955495bfa97",
+                                "passes": 18218,
+                                "fails": 0,
+                                "name": "Visited historical page"
+                            }
+                        ],
+                        "name": "Visit historical page"
+                    }
+                ],
+                "checks": []
+            }
+        ],
+        "checks": [],
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "options": {
+        "summaryTrendStats": [
+            "avg",
+            "min",
+            "med",
+            "max",
+            "p(90)",
+            "p(95)"
+        ],
+        "summaryTimeUnit": "",
+        "noColor": false
+    },
+    "state": {
+        "testRunDurationMs": 60207.216,
+        "isStdOutTTY": true,
+        "isStdErrTTY": true
+    },
+    "metrics": {
+        "http_req_duration{expected_response:true}": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "avg": 65.83825480014497,
+                "min": 5.146,
+                "med": 58.216,
+                "max": 192.532,
+                "p(90)": 105.728,
+                "p(95)": 112.923
+            }
+        },
+        "group_duration": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "max": 402.830758,
+                "p(90)": 200.9204315,
+                "p(95)": 215.224917,
+                "avg": 85.50472372597889,
+                "min": 5.20106,
+                "med": 60.422255500000006
+            }
+        },
+        "vus_max": {
+            "values": {
+                "value": 100,
+                "min": 100,
+                "max": 100
+            },
+            "type": "gauge",
+            "contains": "default"
+        },
+        "http_req_blocked": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "avg": 0.003088043824310391,
+                "min": 0.001,
+                "med": 0.002,
+                "max": 6.26,
+                "p(90)": 0.003,
+                "p(95)": 0.004
+            }
+        },
+        "iteration_duration": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "med": 325.823731,
+                "max": 526.722223,
+                "p(90)": 349.2769462,
+                "p(95)": 371.67587349999985,
+                "avg": 329.9075148775457,
+                "min": 75.181592
+            }
+        },
+        "http_req_waiting": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "avg": 65.21903372451753,
+                "min": 5.117,
+                "med": 57.899,
+                "max": 185.62,
+                "p(90)": 104.268,
+                "p(95)": 111.279
+            }
+        },
+        "data_sent": {
+            "type": "counter",
+            "contains": "data",
+            "values": {
+                "count": 17689880,
+                "rate": 293816.60829492594
+            }
+        },
+        "iterations": {
+            "type": "counter",
+            "contains": "default",
+            "values": {
+                "rate": 302.5883143309599,
+                "count": 18218
+            }
+        },
+        "http_req_connecting": {
+            "contains": "time",
+            "values": {
+                "avg": 0.0008251199350100451,
+                "min": 0,
+                "med": 0,
+                "max": 1.924,
+                "p(90)": 0,
+                "p(95)": 0
+            },
+            "type": "trend"
+        },
+        "http_req_failed": {
+            "values": {
+                "rate": 0,
+                "passes": 0,
+                "fails": 91091
+            },
+            "type": "rate",
+            "contains": "default"
+        },
+        "http_req_tls_handshaking": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "p(95)": 0,
+                "avg": 0,
+                "min": 0,
+                "med": 0,
+                "max": 0,
+                "p(90)": 0
+            }
+        },
+        "vus": {
+            "contains": "default",
+            "values": {
+                "value": 100,
+                "min": 100,
+                "max": 100
+            },
+            "type": "gauge"
+        },
+        "checks": {
+            "contains": "default",
+            "values": {
+                "rate": 1,
+                "passes": 91091,
+                "fails": 0
+            },
+            "type": "rate"
+        },
+        "data_received": {
+            "contains": "data",
+            "values": {
+                "count": 288974406,
+                "rate": 4799663.980477025
+            },
+            "type": "counter"
+        },
+        "http_reqs": {
+            "contains": "default",
+            "values": {
+                "count": 91091,
+                "rate": 1512.9581809595713
+            },
+            "type": "counter"
+        },
+        "http_req_duration": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "p(90)": 105.728,
+                "p(95)": 112.923,
+                "avg": 65.83825480014497,
+                "min": 5.146,
+                "med": 58.216,
+                "max": 192.532
+            }
+        },
+        "http_req_sending": {
+            "contains": "time",
+            "values": {
+                "med": 0.01,
+                "max": 1.568,
+                "p(90)": 0.016,
+                "p(95)": 0.021,
+                "avg": 0.011924295484730079,
+                "min": 0.005
+            },
+            "type": "trend"
+        },
+        "http_req_receiving": {
+            "type": "trend",
+            "contains": "time",
+            "values": {
+                "med": 0.039,
+                "max": 27.487,
+                "p(90)": 1.949,
+                "p(95)": 2.468,
+                "avg": 0.6072967801429325,
+                "min": 0.016
+            }
+        }
+    },
+    "setup_data": {
+        "loginCookie": "s%3AV98WVuAio23IKZ2WcFTn5O5MPiK7C_7Q.JO2DQJ5U3bjjRr81GYw93rueOD83VSco8%2FXf0yNPetM"
+    }
+}

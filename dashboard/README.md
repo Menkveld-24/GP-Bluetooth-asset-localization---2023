@@ -71,6 +71,11 @@ The backend can be started by running the following command in the '/backend' fo
 npm run dev
 ```
 
+Start the docker dev environment:
+```sh
+docker compose up -d
+```
+
 ### Ports and hosts
 After the dev setup the following things should be available at: 
 - PhpMyAdmin (MySQL database management panel): `http://localhost:8008` 
@@ -88,12 +93,11 @@ All dev credentials can be found and changed in docker-compose.yml
 - Paste the token in the `VITE_MAPBOX_TOKEN` .env in the /frontend and either restart the frontend's dev server (npm run dev) or rebuild it.
 
 ### Prettier and ESLint
-TODO
-
-## Building for production
-
-
-## Project structure
-Idk maybe i'll do this one
-
-TODO: Fix package.json files
+Eslint and prettier are set up in this project. 
+You can install the Prettier plugin in VScode to set this up or run any of the 4 commands:
+```sh
+npm run format:check
+npm run format:write
+npm run lint:check
+npm run lint:fix
+```

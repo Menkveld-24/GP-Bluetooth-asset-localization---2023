@@ -152,10 +152,14 @@ uint16_t getBatteryPercentage(){
 						sp->resolution,
 						&val);
 
+		// See the Appendix B3 for the reasoning of the percentage formula
 		float batteryMillivolt = (float) (val * (uint64_t)dcp->full_ohm / dcp->output_ohm);
+		float voltage = batteryMillivolt / 1000;
+
+		float percentage = (1.0919045 * voltage) - 10.2228467;
 		//voltage formula: volt = 0.0105 * percentage + 3.1734
 		// percentage formula: percentage = (volt - 3.1734) / 0.0105
-		float percentage = (batteryMillivolt - 3173.4) / 10.5;
+		// float percentage = (batteryMillivolt - 3173.4) / 10.5;
 		printk("Battery percentage: %d", (int) percentage);
 		return sfloat_from_float(percentage).val;
 	} else {

@@ -17,14 +17,29 @@ export function log(message: any): void
     return;
 }
 
-
+/**
+ * Retrieve the whitelist from the backend
+ * @date 3-7-2023 - 18:22:30
+ *
+ * @export
+ * @async
+ * @returns {Promise<Array<string>>}
+ */
 export async function getWhitelist(): Promise<Array<string>>
 {
     const response = await axios.get(`${config.get('webserver.url')}/api/general/whitelist`);
     return response.data;
 }
 
-
+/**
+ * Check if a mac address is in the whitelist array
+ * @date 3-7-2023 - 18:23:01
+ *
+ * @export
+ * @param {string} mac
+ * @param {Array<string>} whitelist
+ * @returns {boolean}
+ */
 export function isWhitelisted(mac: string, whitelist: Array<string>): boolean
 {
     return whitelist.indexOf(mac) !== -1;
@@ -46,6 +61,14 @@ export interface BLEPacket {
     }
 }
 
+/**
+ * Create a random integer
+ * 
+ * @export
+ * @param min Minimum value (inclusive)
+ * @param max Maximum value (exclusive)
+ * @returns {number} Random integer between min and max
+ */
 export function getRandomInt(min: number, max: number): number
 {
     min = Math.ceil(min);

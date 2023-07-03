@@ -42,12 +42,28 @@ export class RedisHelper extends EventEmitter{
         }
     }
 
+    /**
+     * Initialize the RedisHelper by waiting for a connection to Redis
+     * @date 3-7-2023 - 18:30:29
+     *
+     * @async
+     * @returns {Promise<void>}
+     */
     async init(): Promise<void>
     {
         await this.#waitForRedisConnection();
         return;
     }
 
+    /**
+     * Try to consume new packets from the redis stream based on the whitelist
+     * @date 3-7-2023 - 18:30:53
+     *
+     * @async
+     * @param {Array<string>} whitelist - Array of whitelisted mac addresses
+     * @param {(packets: RedisPacketList) => any} callback - Callback function that will be called with the packets as a parameter
+     * @returns {Promise<void>}
+     */
     async consume(whitelist: Array<string>, callback: (packets: RedisPacketList) => any): Promise<void>
     {
         const rawPackets = await this.redis.redis.xreadgroup(
@@ -71,7 +87,14 @@ export class RedisHelper extends EventEmitter{
         return;
     }
 
-
+    /**
+     * Acknowledge an array of packet IDs
+     * @date 3-7-2023 - 18:30:03
+     *
+     * @async
+     * @param {Array<string>} packetIDs - Array of packet IDs to acknowledge
+     * @returns {Promise<void>}
+     */
     async acknowledgePackets(packetIDs: Array<string>): Promise<void>
     {
         const ack = await this.redis.redis.xack(this.redis.stream, this.redis.group, ...packetIDs);
@@ -79,7 +102,6 @@ export class RedisHelper extends EventEmitter{
         await this.#setLastProcessed(packetIDs);
         return;
     }
-
 
     /**
      * Waits for a connection with redis for 5 times 
@@ -138,7 +160,6 @@ export class RedisHelper extends EventEmitter{
         return streamExists === 1;
     }
 
-
     /**
      * Updates the last_processed:{GROUP} key in redis to
      * the latest processed ID
@@ -169,7 +190,6 @@ export class RedisHelper extends EventEmitter{
         return;
     }
 
-
     /**
      * Check if a group exists for a stream
      * @date 18-5-2023 - 22:26:21
@@ -198,7 +218,6 @@ export class RedisHelper extends EventEmitter{
         return false;
     }
 
-
     /**
      * Attempt to claim unacknowledged messages for a stream
      * 
@@ -218,13 +237,23 @@ export class RedisHelper extends EventEmitter{
         return;
     }
 
+    /**
+     * Parse a raw redis read into a list of packets
+     * @date 3-7-2023 - 19:24:10
+     *
+     * @param {Array<any>} rawPackets
+     * @param {Array<string>} whitelist - Whitelisted MAC addresses
+     * @returns {RedisPacketList}
+     */
     #parseRedisResponse(rawPackets: Array<any>, whitelist: Array<string>): RedisPacketList
     {
         let packetIDs: Array<string> = [];
         let packets: Array<BLEPacket> = [];
+
         for(const [entryId, data] of rawPackets) {
             const packet: BLEPacket = JSON.parse(data[1]);
             packetIDs.push(entryId);
+
             if(isWhitelisted(packet.mac, whitelist)) {
                 packets.push(packet);
             }
@@ -238,6 +267,14 @@ export class RedisHelper extends EventEmitter{
         };
     }
 
+    /**
+     * Create the packets stream
+     * @date 3-7-2023 - 18:28:19
+     *
+     * @async
+     * @param {string} stream - Stream name
+     * @returns {Promise<void>}
+     */
     async createStream(stream: string): Promise<void>
     {
         const addedID = await this.redis.redis.xadd(stream, '*', 'data', 'stream created');
@@ -255,6 +292,15 @@ export class RedisHelper extends EventEmitter{
         return;
     }
 
+    /**
+     * Create a consumer group for a stream
+     * @date 3-7-2023 - 18:27:49
+     *
+     * @async
+     * @param {string} stream - Stream name
+     * @param {string} group - Group name
+     * @returns {Promise<void>}
+     */
     async createGroup(stream: string, group: string): Promise<void>
     {
         const created = await this.redis.redis.xgroup('CREATE', stream, group, '$');
@@ -262,6 +308,13 @@ export class RedisHelper extends EventEmitter{
         return
     }
 
+    /**
+     * Retrieve some metrics regarding the (location)consumers from the Redis Stream
+     * @date 3-7-2023 - 18:27:03
+     *
+     * @async
+     * @returns {Promise<RedisMetrics | null>}
+     */
     async getMetrics(): Promise<RedisMetrics | null>
     {
         const rawMetrics = (await this.redis.redis.xinfo('STREAM', this.redis.stream, 'FULL', 'COUNT', 1) as Array<any>);
@@ -287,7 +340,14 @@ export class RedisHelper extends EventEmitter{
         console.log(metrics);
         return metrics;
     }
-
+    
+    /**
+     * Look up the latest acknowledged entries from the Redis Stream and delete them
+     * @date 3-7-2023 - 18:24:43
+     *
+     * @async
+     * @returns {Promise<void>}
+     */
     async flushProcessedPackets(): Promise<void>
     {
         const consumerGroups: Array<string> = this.config.redis.manager.consumer_groups;

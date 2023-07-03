@@ -4,7 +4,6 @@ process.env["KAFKAJS_NO_PARTITIONER_WARNING"] = "true";
 import { KafkaHelper } from './utils/KafkaHelper';
 import { RedisHelper, RedisMetrics } from './utils/RedisHelper';
 import { ConsumerConfig, getConsumerConfig } from './utils/config';
-import { log } from './utils/utils';
 
 const config: ConsumerConfig = getConsumerConfig();
 const redisHelper = new RedisHelper(config);

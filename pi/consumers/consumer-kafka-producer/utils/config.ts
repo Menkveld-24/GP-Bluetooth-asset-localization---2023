@@ -51,6 +51,13 @@ export interface ConsumerConfig {
     };
 }
 
+/**
+ * Generate the config based on the default-[].json files
+ * @date 3-7-2023 - 18:33:29
+ *
+ * @export
+ * @returns {ConsumerConfig}
+ */
 export function getConsumerConfig(): ConsumerConfig {
     const conf: ConsumerConfig = {
         device: {

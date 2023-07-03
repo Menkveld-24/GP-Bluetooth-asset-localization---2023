@@ -1,0 +1,59 @@
+{
+    "device": {
+        "identifier": "pi_node_1",
+        "process_id": 2 | 4
+    },
+    "webserver": {
+        "url": "https://unimatrix52.nl"
+    },
+    "redis": {
+        "consumer": {
+            "group": "kafka_data_pusher"
+        },
+        "connection": {
+            "host": "localhost",
+            "port": 6379
+        },
+        "packet_stream": "ble_packets",
+        "autoclaim": {
+            "interval_ms": 1000,
+            "min_idle_time_ms": 10000
+        },
+        "read_interval_ms": 0,
+        "claim_size": 10 | 100 | 1000 | 2500 | 5000 | 7500,
+        "manager": {
+            "consumer_groups": []
+        }
+    },
+    "kafka": {
+        "brokers": [
+            "192.168.1.201:29091",
+            "192.168.1.201:29092",
+            "192.168.1.201:29093"
+        ],
+        "consumer_group": "",
+        "whitelist_topic": "THINGY_WHITELIST_COMMANDS",
+        "topic": "RAW_THINGY_BEACONS",
+        "schema_registry": "http://192.168.1.201:8081/",
+        "topic_schema": {
+            "key": {
+                "name": "RAW_THINGY_BEACONS-key",
+                "version": "latest"
+            },
+            "value": {
+                "name": "RAW_THINGY_BEACONS-value",
+                "version": "latest"
+            }
+        },
+        "whitelist_topic_schema": {
+            "key": {
+                "name": "THINGY_WHITELIST_COMMANDS-key",
+                "version": "latest"
+            },
+            "value": {
+                "name": "THINGY_WHITELIST_COMMANDS-value",
+                "version": "latest"
+            }
+        }
+    }
+}
