@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import { GitHub } from '@iconoir/vue';
+</script>
+
 <template>
-    <div class="h-screen relative">
+    <div class="h-screen">
         <div class="h-1/6 md:h-1/4"></div>
         <div class="text-right text-white max-w-none md:max-w-5xl">
             <div class="w-fit md:ml-auto ml-2">
