@@ -1,44 +1,39 @@
 <template>
-    <div v-if="$route.name !== 'Login'" class="h-screen lg:p-10 lg:flex">
-        <div class="lg:w-1/3 lg:max-w-xs lg:text-black text-white">
-            <div class="h-full lg:mr-7 lg:max-w-xs relative">
-                <div class="flex lg:bg-transparent bg-sky-700 shadow-md lg:shadow-none p-2">
-                    <div class="text-4xl">Unimatrix 52</div>
-                    <div
-                        class="duration-500 text-4xl ml-auto show lg:hidden hover:cursor-pointer my-auto"
-                        :class="{ '-rotate-90': openedDropdown }"
-                        @click="openedDropdown = !openedDropdown"
-                    >
-                        <Menu class="w-full h-8"></Menu>
-                    </div>
+    <div v-if="$route.name !== 'Login'" class="lg:flex h-screen lg:p-10">
+        <div class="lg:flex lg:h-full lg:flex-col text-white lg:mr-7 lg:w-1/3 lg:max-w-xs lg:text-black">
+            <div class="flex bg-sky-700 p-2 shadow-md lg:bg-transparent lg:shadow-none">
+                <div class="text-4xl">Unimatrix 52</div>
+                <div
+                    class="show my-auto ml-auto text-4xl duration-500 hover:cursor-pointer lg:hidden"
+                    :class="{ '-rotate-90': openedDropdown }"
+                >
+                    <Menu class="h-8 w-full" @click="openedDropdown = !openedDropdown"></Menu>
                 </div>
-                <div class="">
-                    <div class="ml-2 lg:ml-0 lg:block" :class="{ hidden: !openedDropdown }">
-                        <ul class="w-fit text-black">
-                            <li>
-                                <NavigationButton route-name="Live" :current-route="currentRoute" />
-                            </li>
-                            <li>
-                                <NavigationButton route-name="Thingies" :current-route="currentRoute" />
-                            </li>
-                            <li>
-                                <NavigationButton route-name="Historical" :current-route="currentRoute" />
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="lg:absolute bottom-0 w-full p-2 lg:p-0">
-                        <slot name="infoSection"></slot>
-                    </div>
+            </div>
+            <div class="flex h-full flex-col">
+                <div class="ml-2 lg:ml-0 lg:block" :class="{ hidden: !openedDropdown }">
+                    <ul class="w-fit text-black">
+                        <li>
+                            <NavigationButton route-name="Live" :current-route="currentRoute" />
+                        </li>
+                        <li>
+                            <NavigationButton route-name="Thingies" :current-route="currentRoute" />
+                        </li>
+                        <li>
+                            <NavigationButton route-name="Historical" :current-route="currentRoute" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-auto w-full p-2">
+                    <slot name="infoSection"></slot>
                 </div>
             </div>
         </div>
         <div
-            class="relative lg:min-h-full w-full bg-white rounded-lg shadow-md p-3"
+            class="relative w-full rounded-lg p-3 shadow-md lg:min-h-full bg-white"
             :class="$route.meta?.showMap ? 'h-full' : 'h-fit'"
         >
-            <!-- <div class="p-3 h-full relative bg-green-200"> -->
             <slot name="contentSection"></slot>
-            <!-- </div> -->
         </div>
     </div>
 </template>
