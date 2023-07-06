@@ -16,19 +16,23 @@
                 <Suspense>
                     <router-view v-if="mapStatus.isReady" :key="childKey" name="content" />
                 </Suspense>
+                <div class="absolute -bottom-8 right-0 flex text-sky-950 text-xs mb-1">
+                    <div class="py-1 px-2 my-auto">
+                        @2023 By Menke Veerman as a Graduation Project at the University of Twente
+                    </div>
+                    <a
+                        href="https://github.com/Menkveld-24/GP-Bluetooth-asset-localization---2023"
+                        target="_blank"
+                        class="ml-4 flex hover:bg-sky-800/40 rounded-sm py-1 px-2 duration-200 min-w-fit"
+                    >
+                        <GitHub class="h-4 my-auto" />Github
+                    </a>
+                </div>
             </template>
         </BaseLayout>
         <router-view v-else v-slot="{ Component }">
             <component :is="Component" />
         </router-view>
-        <div class="absolute transition-all bottom-0 right-0 flex text-sky-950 text-xs mb-1">
-            <div class="py-1 px-2 my-auto">
-                @2023 By Menke Veerman as a Graduation Project at the University of Twente
-            </div>
-            <div class="ml-4 flex hover:bg-sky-800/40 rounded-sm py-1 px-2 duration-200 min-w-fit">
-                <GitHub class="h-4 my-auto" />Github
-            </div>
-        </div>
     </div>
 </template>
 

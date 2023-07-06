@@ -1,11 +1,11 @@
 <template>
-    <div v-if="$route.name !== 'Login'" class="h-screen md:p-10 md:flex">
-        <div class="md:w-1/3 md:max-w-xs md:text-black text-white">
-            <div class="h-full md:mr-7 md:max-w-xs relative">
-                <div class="flex md:bg-transparent bg-sky-700 shadow-md md:shadow-none p-2">
+    <div v-if="$route.name !== 'Login'" class="h-screen lg:p-10 lg:flex">
+        <div class="lg:w-1/3 lg:max-w-xs lg:text-black text-white">
+            <div class="h-full lg:mr-7 lg:max-w-xs relative">
+                <div class="flex lg:bg-transparent bg-sky-700 shadow-md lg:shadow-none p-2">
                     <div class="text-4xl">Unimatrix 52</div>
                     <div
-                        class="duration-500 text-4xl ml-auto show md:hidden hover:cursor-pointer my-auto"
+                        class="duration-500 text-4xl ml-auto show lg:hidden hover:cursor-pointer my-auto"
                         :class="{ '-rotate-90': openedDropdown }"
                         @click="openedDropdown = !openedDropdown"
                     >
@@ -13,8 +13,8 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="ml-2 md:ml-0 md:block" :class="{ hidden: !openedDropdown }">
-                        <ul class="w-fit">
+                    <div class="ml-2 lg:ml-0 lg:block" :class="{ hidden: !openedDropdown }">
+                        <ul class="w-fit text-black">
                             <li>
                                 <NavigationButton route-name="Live" :current-route="currentRoute" />
                             </li>
@@ -26,19 +26,19 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="md:absolute bottom-0 w-full p-2 md:p-0">
+                    <div class="lg:absolute bottom-0 w-full p-2 lg:p-0">
                         <slot name="infoSection"></slot>
                     </div>
                 </div>
             </div>
         </div>
         <div
-            class="relative md:min-h-full w-full bg-white rounded-lg shadow-md"
+            class="relative lg:min-h-full w-full bg-white rounded-lg shadow-md p-3"
             :class="$route.meta?.showMap ? 'h-full' : 'h-fit'"
         >
-            <div class="p-3 h-full relative">
-                <slot name="contentSection"></slot>
-            </div>
+            <!-- <div class="p-3 h-full relative bg-green-200"> -->
+            <slot name="contentSection"></slot>
+            <!-- </div> -->
         </div>
     </div>
 </template>
