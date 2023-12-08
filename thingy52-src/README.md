@@ -5,6 +5,10 @@ This periodically transmits a BLE advertisement packet containing the humidity, 
 ## SETUP
 Install all the NCS SDK tools and setup VScode using their extension. Add a board configuration for: `thingy52_nrf52832`.
 
+## BUILD files
+This repo contains the built directory including a hex file. (build.hex).
+This file can be flashed to an nrf52 using the nrf connect sdk and then the programmer applicatin.
+
 ## FOTA
 The project won't compile with default settings of the NCS SDK 2.2.0 due to a config flag which needs to be removed in the library. Follow the following steps carefully:
 
