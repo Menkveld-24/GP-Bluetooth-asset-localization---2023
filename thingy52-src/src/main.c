@@ -17,7 +17,7 @@ LOG_MODULE_REGISTER(main);
 #define ADV_DONE_LED            DK_LED3
 #define MANUFACTURER_ID         0x4548
 #define FW_VERSION              0x01
-#define ADV_INTERVAL_MS         100
+#define ADV_INTERVAL_MS         2000
 
 bool isRunning = true;
 
